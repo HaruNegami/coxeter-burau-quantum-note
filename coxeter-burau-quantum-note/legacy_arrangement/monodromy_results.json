@@ -1,0 +1,242 @@
+{
+  "parameter": "q = exp(2*pi*i*alpha), a_i=lambda=alpha, parallel input weights zero",
+  "basepoint": [
+    "1/4",
+    "2"
+  ],
+  "labelled_configuration": [
+    "0",
+    "x",
+    "1-x",
+    "y"
+  ],
+  "convention": "columns; right-hand path first; positive CCW local circles",
+  "monodromy_matrices": {
+    "y=0": {
+      "pure_generator": "A_14",
+      "word": [
+        3,
+        2,
+        1,
+        1,
+        -2,
+        -3
+      ],
+      "matrix": [
+        [
+          "q**2",
+          "0",
+          "0"
+        ],
+        [
+          "q**2 - q",
+          "1",
+          "0"
+        ],
+        [
+          "q**2 - q",
+          "0",
+          "1"
+        ]
+      ],
+      "latex": "\\left[\\begin{matrix}q^{2} & 0 & 0\\\\q^{2} - q & 1 & 0\\\\q^{2} - q & 0 & 1\\end{matrix}\\right]",
+      "u": [
+        "q + 1",
+        "q",
+        "q"
+      ],
+      "v": [
+        "1",
+        "0",
+        "0"
+      ]
+    },
+    "y=x": {
+      "pure_generator": "A_24",
+      "word": [
+        3,
+        2,
+        2,
+        -3
+      ],
+      "matrix": [
+        [
+          "1",
+          "q - 1",
+          "0"
+        ],
+        [
+          "0",
+          "q**2",
+          "0"
+        ],
+        [
+          "0",
+          "q**2 - q",
+          "1"
+        ]
+      ],
+      "latex": "\\left[\\begin{matrix}1 & q - 1 & 0\\\\0 & q^{2} & 0\\\\0 & q^{2} - q & 1\\end{matrix}\\right]",
+      "u": [
+        "1",
+        "q + 1",
+        "q"
+      ],
+      "v": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    "y=1-x": {
+      "pure_generator": "A_34",
+      "word": [
+        3,
+        3
+      ],
+      "matrix": [
+        [
+          "1",
+          "0",
+          "q - 1"
+        ],
+        [
+          "0",
+          "1",
+          "q - 1"
+        ],
+        [
+          "0",
+          "0",
+          "q**2"
+        ]
+      ],
+      "latex": "\\left[\\begin{matrix}1 & 0 & q - 1\\\\0 & 1 & q - 1\\\\0 & 0 & q^{2}\\end{matrix}\\right]",
+      "u": [
+        "1",
+        "1",
+        "q + 1"
+      ],
+      "v": [
+        "0",
+        "0",
+        "1"
+      ]
+    },
+    "x=0": {
+      "pure_generator": "A_12",
+      "word": [
+        1,
+        1
+      ],
+      "matrix": [
+        [
+          "q**2 - q + 1",
+          "-q**2 + q",
+          "0"
+        ],
+        [
+          "1 - q",
+          "q",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "latex": "\\left[\\begin{matrix}q^{2} - q + 1 & - q^{2} + q & 0\\\\1 - q & q & 0\\\\0 & 0 & 1\\end{matrix}\\right]",
+      "u": [
+        "q",
+        "-1",
+        "0"
+      ],
+      "v": [
+        "1",
+        "-1",
+        "0"
+      ]
+    },
+    "x=1": {
+      "pure_generator": "A_13",
+      "word": [
+        2,
+        1,
+        1,
+        -2
+      ],
+      "matrix": [
+        [
+          "q**2 - q + 1",
+          "0",
+          "-q**2 + q"
+        ],
+        [
+          "q**2 - 2*q + 1",
+          "1",
+          "-q**2 + 2*q - 1"
+        ],
+        [
+          "1 - q",
+          "0",
+          "q"
+        ]
+      ],
+      "latex": "\\left[\\begin{matrix}q^{2} - q + 1 & 0 & - q^{2} + q\\\\q^{2} - 2 q + 1 & 1 & - q^{2} + 2 q - 1\\\\1 - q & 0 & q\\end{matrix}\\right]",
+      "u": [
+        "q",
+        "q - 1",
+        "-1"
+      ],
+      "v": [
+        "1",
+        "0",
+        "-1"
+      ]
+    },
+    "x=1/2": {
+      "pure_generator": "A_23",
+      "word": [
+        2,
+        2
+      ],
+      "matrix": [
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "q**2 - q + 1",
+          "-q**2 + q"
+        ],
+        [
+          "0",
+          "1 - q",
+          "q"
+        ]
+      ],
+      "latex": "\\left[\\begin{matrix}1 & 0 & 0\\\\0 & q^{2} - q + 1 & - q^{2} + q\\\\0 & 1 - q & q\\end{matrix}\\right]",
+      "u": [
+        "0",
+        "q",
+        "-1"
+      ],
+      "v": [
+        "0",
+        "1",
+        "-1"
+      ]
+    }
+  },
+  "checks": {
+    "pure_generators_verified": 34,
+    "geometric_meridian_words_verified": 6,
+    "residue_first_derivatives_verified": 6,
+    "full_twist": "q^4 I_3",
+    "status": "PASS"
+  },
+  "scope": "These are the based matrices on the enlarged six-line complement. Generic MC/Burau identification; Burau matrices themselves are defined for q != 0."
+}

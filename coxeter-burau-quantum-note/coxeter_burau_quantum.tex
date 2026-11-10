@@ -1,0 +1,1165 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,booktabs,array,longtable,microtype}
+\usepackage[margin=27mm]{geometry}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\U}{\mathrm U}
+\newcommand{\SU}{\mathrm {SU}}
+\newcommand{\PU}{\mathrm {PU}}
+\newcommand{\su}{\mathfrak {su}}
+\newcommand{\slie}{\mathfrak {sl}}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\Cl}{\operatorname{Cliff}}
+
+\newcommand{\A}{\mathcal A}
+\newcommand{\B}{\mathcal B}
+\newcommand{\h}{\mathfrak h}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\mc}{\operatorname{mc}}
+\newcommand{\Conf}{\operatorname{Conf}}
+\newcommand{\Rep}{\operatorname{Rep}_{\mathrm{fd}}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\Id}{\operatorname{Id}}
+\title{Generalized Burau representations and quantum gates:\\arrangements, compact closures, and prior results}
+\author{Haru Negami}
+\date{Note, 10 November 2026}
+\hypersetup{pdfauthor={Haru Negami},pdftitle={Generalized Burau representations and quantum gates}}
+\begin{document}
+\maketitle
+\begin{abstract}
+We collect explicit generalized Burau matrices, their invariant Hermitian
+forms, and a quantum-gate interpretation for finite Coxeter arrangements.
+We determine the conditions under which the invariant Hermitian forms
+are positive definite in terms of the Coxeter exponents.  A direct
+rank-two proof gives a compact-closure formula for
+$0<|\theta|<\min\{\pi/h,\pi/10\}$, including roots of unity.
+For $E_6,E_7,E_8$, this formula holds throughout the parameter interval
+where the invariant Hermitian form is positive definite, except at the
+undeformed Coxeter specialization.  We explicitly show that these exceptional-type
+closure conclusions also follow from the existing two-eigenvalue
+classification of Freedman--Larsen--Wang; they are not claimed as new
+density or finite-image classification theorems.  In dimension eight,
+the resulting gates are non-Clifford, and are projectively universal
+away from the Coxeter specialization.  Appendices retain the Dynkin-type
+dictionary, algebraic convolution formulas for general affine arrangements,
+and a six-line based-monodromy example from the earlier note.
+The contribution of this document is an explicit synthesis with proofs,
+conventions, and reproducible calculations; theorem-by-theorem overlap
+with prior work is recorded.
+\end{abstract}
+
+\section{Introduction and statement}\label{sec:general-burau}
+In earlier work, we proposed a method for constructing quantum gates
+from monodromy representations obtained by applying middle convolution
+to KZ-type systems \cite{NegamiGates,NegamiKZ}.
+Motivated by this construction, the present note studies generalized
+Burau representations of Artin--Tits groups and their use in quantum
+gate construction.  Starting from Squier's representations \cite{Squier},
+we determine explicit conditions for positive definiteness of the invariant
+Hermitian forms in finite Coxeter type and describe the resulting unitary
+gates.  We also recall the middle-convolution construction for general
+affine hyperplane arrangements on their directional closures \cite{AH,Hiroe}
+and make its relation to Burau pullbacks explicit in an equal-weight
+specialization (Appendix~\ref{sec:equal}).
+
+Our emphasis is on explicit parameter ranges and on the
+distinction between finite-order generators and a finite generated group.
+
+
+\paragraph{General Coxeter type versus arbitrary arrangements.}
+For any finite-rank Coxeter matrix, not necessarily of finite type, the
+known construction on $\C(t)^r$ is
+\begin{equation}\label{eq:coxeter-burau}
+ R_i e_j=\begin{cases}
+ -t^2 e_i,&j=i,\\
+ e_j+2t\cos(\pi/m_{ij})e_i,&j\ne i,
+ \end{cases}\qquad \cos(\pi/\infty)=1.
+\end{equation}
+The matrices satisfy the Artin relations, have determinant $-t^2$, and
+satisfy $(R_i-I)(R_i+t^2I)=0$; they specialize for every $t\ne0$
+\cite{Squier,BQ}.  Our parameter is the negative of that in
+\cite[Definition 2.1]{BQ}, and agrees with \cite{SageArtin}.
+An arbitrary affine arrangement need not have a Coxeter matrix or a
+Dynkin type.  Appendix~\ref{sec:dynkin} explains the type notation;
+Appendices~\ref{sec:general-arrangement}--\ref{sec:descent} treat a
+different, direction-dependent construction for arbitrary arrangements.
+No identification of the exceptional Coxeter representations with a
+middle-convolution output is assumed.
+
+The closure results below require finite irreducible Coxeter type.
+
+Let $W$ be a finite irreducible Coxeter group of rank $r\geq2$, with
+Coxeter matrix $(m_{ij})$, Coxeter number $h$, and Artin group $B_W$.
+Write $P_W=\ker(B_W\to W)$.  Define the real symmetric matrix
+\begin{equation}\label{eq:A}
+ A_{ii}=0,\qquad A_{ij}=2\cos(\pi/m_{ij})\quad(i\ne j).
+\end{equation}
+For $t=e^{i\theta}$ put
+\begin{equation}\label{eq:H}
+ H_\theta=2\cos\theta\,I-A,
+ \qquad R_i=I-t e_i e_i^*H_\theta.
+\end{equation}
+These are the generalized Burau matrices, with
+$R_ie_i=-t^2e_i$ and $R_ie_j=e_j+tA_{ij}e_i$ for $j\ne i$.
+When $H_\theta>0$, let
+\begin{equation}\label{eq:U}
+ S=H_\theta^{1/2},\qquad U_i=SR_iS^{-1},\qquad
+ \lambda=-e^{2i\theta},\qquad D_\theta=\overline{\langle\lambda\rangle}
+ \subset\U(1).
+\end{equation}
+Closures throughout the paper are in the ordinary compact-group topology.
+
+\begin{theorem}[Explicit closure formula]\label{thm:main}
+Suppose
+\begin{equation}\label{eq:range}
+ 0<|\theta|<\min\{\pi/h,\pi/10\}.
+\end{equation}
+Then the unitarized representation satisfies
+\begin{align}
+ \overline{\rho_\theta(B_W)}
+ &=\{g\in\U(r):\det g\in D_\theta\},\label{eq:closure}\\
+ \overline{\rho_\theta(P_W)}
+ &=\{g\in\U(r):\det g\in
+            \overline{\langle\lambda^2\rangle}\}.\label{eq:pureclosure}
+\end{align}
+In particular, both projective images are dense in $\PU(r)$.
+If $\theta/\pi$ is irrational, both closures are $\U(r)$.
+If $\lambda$ has finite order $k$, the closures have respectively
+$k$ and $k/\gcd(k,2)$ connected components, each a coset of $\SU(r)$.
+
+For $h\geq10$, the hypothesis covers the full positive interval
+$0<|\theta|<\pi/h$.  In $|\theta|<\pi/h$ the Artin image is then finite
+if and only if $\theta=0$; at $0$ the image is the reflection representation
+of $W$, and the pure image is trivial.
+\end{theorem}
+
+The exceptional types have $h=12,18,30$, respectively.  Thus the theorem
+is exhaustive within their positive intervals.  It is not a classification
+of specializations outside those intervals, or at degenerate endpoints.
+
+\paragraph{Relation to prior work.}
+The representation and form are due to Squier \cite{Squier}.
+The exceptional-type conclusion of Theorem~\ref{thm:main} is a
+consequence of Freedman--Larsen--Wang \cite{FLW}; the precise reduction
+is given in Proposition~\ref{prop:flw}.  Thus an explicit interval or a
+root-of-unity specialization does not, by itself, establish novelty.
+Marin's generic compact specialization theorem \cite[Theorem~4]{Marin}
+and the rank-two analysis of Funar--Kohno \cite{FK} provide further
+precedent.  The finite $W(E_8)$ connection with three-qubit gates is also
+known \cite{Planat,ARW}.  Selective-phase gate descriptions and the Toffoli
+comparison overlap with the author's separate working draft
+\cite[Section~6]{Negami}.  Section~\ref{sec:overlap} distinguishes known
+constructions, consequences of existing theorems, and explicit calculations.
+
+\section{Invariant forms and explicit unitary gates}
+The matrix in \eqref{eq:H} is the specialization of Squier's two-variable
+form obtained by setting both variables equal to $t$ and dividing the
+Gram matrix by $t$.  The matrices $R_i$ satisfy the Artin relations
+\cite{Squier}.  In our convention, type $A_r$ corresponds to reduced
+Burau with classical parameter $q=t^2$.
+
+\begin{proposition}\label{prop:form}
+For $|t|=1$, $R_i^*H_\theta R_i=H_\theta$.  If $d_1,\ldots,d_r$
+are the Coxeter exponents, the eigenvalues of $H_\theta$ are
+\begin{equation}\label{eq:spectrum}
+ 2\cos\theta-2\cos(\pi d_j/h),\qquad 1\leq j\leq r.
+\end{equation}
+For $-\pi<\theta\leq\pi$, this particular form is positive definite
+exactly when $|\theta|<\pi/h$.
+\end{proposition}
+\begin{proof}
+Set $E_i=e_ie_i^*$.  Expansion gives
+\[
+ R_i^*H_\theta R_i-H_\theta
+ =[-t-\bar t+|t|^2(H_\theta)_{ii}]H_\theta E_iH_\theta=0.
+\]
+The spectrum of $A$ is $2\cos(\pi d_j/h)$; for crystallographic types
+this is the standard Cartan/adjacency spectral identity, with diagonal
+symmetrization in the nonsimply-laced cases \cite{Damianou}.
+The finite Coxeter version uses the same geometric Gram matrix.
+The smallest exponent is $1$, so the smallest eigenvalue of $H_\theta$
+is $2\cos\theta-2\cos(\pi/h)$.
+\end{proof}
+
+At a degenerate parameter, $\ker H_\theta$ is fixed pointwise by all
+$R_i$ and the form descends to a nondegenerate form on the quotient.
+We do not use that quotient in Theorem~\ref{thm:main}.  The negative-definite
+region can also be unitarized after changing the overall sign; our
+finite-image statement is explicitly restricted to the positive interval.
+
+In the positive interval set
+\begin{equation}\label{eq:rankone}
+ p_i=\frac{Se_i}{\sqrt{2\cos\theta}},\qquad
+ U_i=I+(\lambda-1)p_ip_i^*,\qquad
+ \langle p_i,p_j\rangle=-\frac{A_{ij}}{2\cos\theta}\quad(i\ne j).
+\end{equation}
+The $p_i$ form a basis of unit vectors.  Each $U_i$ is the identity on
+$p_i^\perp$ and multiplies $p_i$ by $\lambda$; hence
+\begin{equation}\label{eq:trace}
+ \det U_i=\lambda,\qquad \Tr U_i=r-1+\lambda.
+\end{equation}
+The same positive square root $S$ is used for every generator.
+
+For $E_r$, $r=6,7,8$, use the edges
+\[
+ \mathcal E_r=\{\{i,i+1\}:1\leq i\leq r-2\}\cup\{\{3,r\}\}.
+\]
+Then $A$ is the ordinary adjacency matrix.  This convention fixes all
+matrices without a choice of root coordinates.
+\begin{center}
+\begin{tabular}{ccll}
+\toprule
+Type & $h$ & Exponents & Positive interval\\
+\midrule
+$E_6$ & $12$ & $1,4,5,7,8,11$ & $|\theta|<\pi/12$\\
+$E_7$ & $18$ & $1,5,7,9,11,13,17$ & $|\theta|<\pi/18$\\
+$E_8$ & $30$ & $1,7,11,13,17,19,23,29$ & $|\theta|<\pi/30$\\
+\bottomrule
+\end{tabular}
+\end{center}
+For example, $U_3=I+(\lambda-1)(Se_3)(Se_3)^*/(2\cos\theta)$.
+In the original basis, row $3$ of $R_3$ has entries $t$ in columns
+$2,4,r$, entry $-t^2$ in column $3$, and zeros elsewhere; all other
+rows are those of the identity.
+
+\section{From two-dimensional subspaces to the full closure}\label{sec:direct}
+The proof below does not infer density from irreducibility or from
+infinite order alone.
+
+\begin{lemma}\label{lem:two}
+Let $p,q$ be independent unit vectors with
+$0<|\langle p,q\rangle|<1$.  On $T=\Span\{p,q\}$ consider
+$V_p=I+(\lambda-1)pp^*$ and $V_q=I+(\lambda-1)qq^*$, where
+$\lambda=-e^{2i\theta}$ and $0<|\theta|<\pi/10$.
+Their projective image is dense in $\PU(T)$, and their unitary closure
+contains $\SU(T)$.
+\end{lemma}
+\begin{proof}
+Under $\PU(2)\simeq\mathrm{SO}(3)$, each generator is a rotation of
+angle $\alpha=\pi-2|\theta|\in(4\pi/5,\pi)$.  Their axes are distinct:
+equality of the unoriented axes would mean that the two eigenlines are
+equal or orthogonal, both excluded by hypothesis.
+
+The finite rotation groups are cyclic, dihedral, tetrahedral, octahedral,
+and icosahedral.  In the first two, every rotation with angle different
+from $\pi$ has the same axis.  In the last three, every angle smaller
+than $\pi$ is at most $4\pi/5$.  Thus the projective group is infinite.
+An infinite proper closed subgroup of $\mathrm{SO}(3)$ has identity
+component a circle and is contained in its normalizer.  In that normalizer
+all rotations other than half turns have the circle's axis, again a
+contradiction.  The projective closure is therefore $\mathrm{SO}(3)$.
+
+If $\mathfrak k\subset\mathfrak u(2)$ is the Lie algebra of the unitary
+closure, its projection onto $\mathfrak{pu}(2)$ is surjective.  Hence
+$[\mathfrak k,\mathfrak k]\subset\su(2)$ projects onto $\su(2)$ and
+equals it.  The closure contains $\SU(2)$.
+\end{proof}
+
+\begin{lemma}\label{lem:fusion}
+Let $v_1,\ldots,v_r$ be a basis of a Hilbert space $V$, and let $\Gamma$
+be a connected graph on these indices.  A closed subgroup of $\U(V)$
+containing $\SU(\Span\{v_i,v_j\})$, acting trivially on its orthogonal
+complement, for every edge $\{i,j\}$ contains $\SU(V)$.
+\end{lemma}
+\begin{proof}
+We use a connected ordering of a spanning tree.  Suppose $\SU(S)$ has
+already been obtained and an edge supplies $\SU(T)$, where $\dim T=2$
+and $S\cap T=\C u$ for a unit vector $u$.  Choose a unit vector
+$w\in T\cap u^\perp$ and write $w=a+bz$, with $a\in S\cap u^\perp$,
+$z\perp S$ a unit vector, and $b\ne0$.
+In the complexified generated Lie algebra, $uw^*$ belongs to
+$\slie(T)$ and $ua^*$ to $\slie(S)$.  Subtraction gives $uz^*$;
+similarly one obtains $zu^*$.  Commutators with $\slie(S)$ give
+$xz^*,zx^*$ for all $x\in S$, and their commutators give the missing
+trace-zero diagonal operator.  They generate $\slie(S+T)$.
+The original compact Lie algebra therefore contains $\su(S+T)$.
+Induction, starting from one edge, gives the assertion.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+For an edge of the Coxeter graph, \eqref{eq:rankone} and positivity give
+$0<|\langle p_i,p_j\rangle|<1$.  The two gates preserve their span and
+fix its orthogonal complement pointwise.  Lemma~\ref{lem:two} gives an
+embedded $\SU(2)$ in the closure on each edge.  Connectedness and
+Lemma~\ref{lem:fusion} imply that the full closure $G$ contains $\SU(r)$.
+
+The determinant of every word is a power of $\lambda$.  By compactness,
+$\det G=\overline{\langle\lambda\rangle}=D_\theta$.  Since the kernel
+of determinant is contained in $G$, this proves \eqref{eq:closure}.
+
+The pure group has finite index in the Artin group.  Its image closure
+$G_P$ consequently has finite index in $G$, so contains $G^\circ$ and
+in particular $\SU(r)$.  The exponent-sum homomorphism of the Artin group
+is even on $P_W$, since its parity is the Coxeter sign character.  Moreover
+$\sigma_i^2\in P_W$ has exponent sum $2$.  Hence the determinant image
+of $P_W$ is exactly $\langle\lambda^2\rangle$, proving
+\eqref{eq:pureclosure}.  The assertions about rational and irrational
+parameters follow from closed subgroups of $\U(1)$.
+
+At $\theta=0$, the matrices $R_i$ are the faithful geometric reflection
+representation of $W$.  Every other parameter in \eqref{eq:range}
+has closure containing the positive-dimensional group $\SU(r)$ and
+therefore has infinite image.  If $h\geq10$, the positive interval is
+contained in $|\theta|<\pi/10$.
+\end{proof}
+
+\begin{remark}[Scope for other types]
+For crystallographic groups, the full-positive-interval conclusion also
+applies to $A_n$ with $n\geq9$, $B_n=C_n$ with $n\geq5$, $D_n$ with
+$n\geq6$, and $F_4$.  Smaller Coxeter numbers are still covered on the
+smaller interval in \eqref{eq:range}; no assertion is made here about
+their remaining positive parameters.  Merely assuming that $\lambda$
+is a root of unity would not prove finite image.
+\end{remark}
+
+\section{Clifford obstruction and quantum universality}
+We fix the usual identification $\C^8=(\C^2)^{\otimes3}$ in the
+orthonormal coordinates of \eqref{eq:U}.  The Clifford group means the
+normalizer of the tensor-product Pauli group, with arbitrary global
+phases allowed.  Its binary symplectic action is standard \cite{DDM}.
+
+\begin{lemma}\label{lem:clifford}
+If $C$ is a nonscalar Clifford unitary on $n$ qubits and $d=2^n$, then
+\begin{equation}\label{eq:tracebound}
+ |\Tr C|^2\leq d^2/2.
+\end{equation}
+Consequently, for $n\geq3$ and $\lambda\ne1$, no unitary with spectrum
+$\{1^{(d-1)},\lambda\}$ is Clifford, in any orthonormal encoding.
+\end{lemma}
+\begin{proof}
+Let $F\in\mathrm{Sp}(2n,2)$ be the induced permutation of Pauli labels.
+The conjugation operator $\operatorname{Ad}_C$ is a signed permutation
+on the Hermitian Pauli basis, and
+$\Tr(\operatorname{Ad}_C)=|\Tr C|^2$.
+If $F\ne I$, at most $2^{2n-1}$ labels are fixed, so its trace is at most
+that number.  If $F=I$, the Clifford is a Pauli up to phase; unless
+scalar, its trace is zero.  This proves \eqref{eq:tracebound}.
+For the stated spectrum,
+$|\Tr U|\geq d-2$, whereas $(d-2)^2>d^2/2$ for $d\geq8$.
+Trace magnitude is unchanged by a global phase or a common unitary
+change of encoding.
+\end{proof}
+
+\begin{corollary}\label{cor:e8}
+For type $E_8$ and $|\theta|<\pi/30$, every generator $U_i$ is
+non-Clifford.  For $0<|\theta|<\pi/30$, the gates
+$\{U_i,U_i^{-1}:1\leq i\leq8\}$ are approximately universal on three
+qubits, up to global phase.  At $\theta=0$ all generators remain
+non-Clifford, but the generated group is the finite group $W(E_8)$.
+\end{corollary}
+\begin{proof}
+Here $\lambda\ne1$ and $\Tr U_i=7+\lambda$, so
+$|\Tr U_i|^2\geq36>32$.  Apply Lemma~\ref{lem:clifford} and the
+projective closure in Theorem~\ref{thm:main}.
+\end{proof}
+
+Non-Cliffordness alone is thus insufficient for universality, even within
+this single continuous family.  A fixed three-qubit gate set is meant
+here.  If its gates can be applied to arbitrary selected triples in a
+larger register, one obtains circuit universality by approximating arbitrary
+one- and two-qubit gates inside a triple \cite{Barenco}.  No implementation cost or
+fault-tolerance advantage is asserted.
+
+\paragraph{An exact root-of-unity example.}
+Take $\theta=\pi/60$.  Then
+\[
+ t=e^{i\pi/60},\qquad \lambda=e^{2\pi i\,31/60},\qquad U_i^{60}=I.
+\]
+Although all eight gates have exact order $60$, their group is infinite,
+its projective closure is $\PU(8)$, and its full closure is
+\[
+ \{g\in\U(8):\det g\in\mu_{60}\}.
+\]
+The pure-group closure has determinant in $\mu_{30}$.  Inverses are
+already positive powers of the gates in this example.
+
+\paragraph{Gate realization.}
+If a unitary $V_i$ satisfies $V_i|111\rangle=p_i$, then
+\begin{equation}\label{eq:circuit}
+ U_i=V_i\diag(1,1,1,1,1,1,1,\lambda)V_i^*.
+\end{equation}
+Thus each generator is a conjugated three-qubit controlled phase.
+Such a $V_i$ can be constructed by completing $p_i$ to an orthonormal
+basis, or by a Householder map.  Formula \eqref{eq:circuit} is a matrix
+realization, not a claim that $V_i$ is a free or Clifford operation.
+At $\theta=0$ it is a conjugate of CCZ, hence also of Toffoli.
+This is an individual conjugacy statement, not a simultaneous
+identification of the entire generator set with one gate.
+
+\paragraph{The other exceptional dimensions.}
+Types $E_6,E_7$ give projectively universal gates on $\C^6,\C^7$.
+One may use $\C^6\simeq\C^2\otimes\C^3$, or encode either space in
+three qubits.  Under the latter choice, the extension
+$U_i\oplus I_{8-r}$ is still a nontrivial rank-one phase gate and is
+non-Clifford by Lemma~\ref{lem:clifford}.  The group generated by these extensions preserves
+the code and the unused subspace, so is not universal on all of $\C^8$.
+
+\section{Arrangement interpretation and reproducibility}
+Let $X_W$ be the complement of the complexified reflection arrangement.
+Then $P_W=\pi_1(X_W)$ and $B_W=\pi_1(X_W/W)$.  Formula
+\eqref{eq:pureclosure} therefore gives the compact closure for the
+actual arrangement-complement representation, not only for the quotient
+by $W$.  For a general arrangement and a map $f$ into $X_W$,
+a pullback representation inherits the form, but its image can
+be a much smaller subgroup.  Density does not follow without information
+about $f_*(\pi_1)$.
+
+An arbitrary arrangement need not have a Dynkin type.  The results above
+concern reflection arrangements and do not supply a canonical universal
+gate construction for all arrangements.  We also do not identify these
+representations with a Katz--Long--Moody quotient; such a comparison is
+unnecessary for the closure proof.
+
+The accompanying \texttt{verify\_coxeter\_gates.py} constructs the
+matrices and exports a concrete $E_8$ gate set at $\theta=\pi/60$.
+It verifies the Artin and invariant-form identities exactly over
+$\mathbb Z[t,t^{-1}]$ for $E_6,E_7,E_8$, and checks the positive
+square-root construction, spectral formulas, determinants, and Clifford
+trace obstruction numerically.  The numerical checks are consistency
+checks; the density, finite-image classification, and non-Clifford
+conclusions follow from the proofs above rather than finite word searches.
+
+
+\section{Comparison with existing theorems}\label{sec:overlap}
+The following reduction is included to make the overlap a mathematical
+statement, rather than an inference from similar titles or abstracts.
+
+\begin{proposition}[Exceptional-type closure as an existing-theorem consequence]
+\label{prop:flw}
+For $W=E_r$, $r=6,7,8$, and $0<|\theta|<\pi/h$, the inclusion
+$\SU(r)\subset\overline{\rho_\theta(B_W)}$ follows from
+\cite[Theorems~1.1, 1.4 and 1.6]{FLW}, without using the rank-two
+density proof of Section~\ref{sec:direct}.
+\end{proposition}
+\begin{proof}
+Put $G=\overline{\langle U_1,\ldots,U_r\rangle}$.  This is a compact
+matrix group acting faithfully.  It acts irreducibly: a nonzero invariant
+subspace contains some $p_i$, since the $p_i$ span and
+$(U_i-I)v=(\lambda-1)p_i\langle p_i,v\rangle$.
+Nonzero overlaps along the connected Coxeter diagram then put every
+$p_j$ in that subspace.
+
+All Artin generators in a connected simply-laced diagram are conjugate:
+if $aba=bab$, then $(ab)a(ab)^{-1}=b$.
+Consequently the conjugacy class of $U_1$ generates $G$ topologically.
+Its eigenvalues are $1$ and $\lambda$ with multiplicities $r-1$ and $1$,
+and $\lambda\ne\pm1$.  These are exactly the two-eigenvalue hypotheses
+of \cite{FLW}.
+
+If $G/Z(G)$ were finite, \cite[Theorem~1.6]{FLW} would imply
+$U_1^m\in Z(G)$ for some $m\in\{3,4,5\}$.
+By irreducibility this forces $\lambda^m=1$.  But the smaller angle
+of $\lambda$ is $\pi-2|\theta|\in(4\pi/5,\pi)$, which excludes those
+orders.  Thus $G/Z(G)$ has positive dimension.
+
+Let $K=[G^\circ,G^\circ]$.  Applying
+\cite[Theorems~1.1 and 1.4]{FLW}, $K$ acts irreducibly,
+$G=G^\circ Z(G)$, and its representation belongs to their list.
+In dimensions $6,7,8$, the alternatives to the defining or dual
+representation of $\SU(r)$ all preserve a nondegenerate complex
+bilinear form.  Explicitly, dimension $6$ also permits
+$\bigwedge^2\C^4$ for $\SU(4)$ and the defining $\mathrm{Sp}(6)$
+module; dimension $7$ has no alternative; dimension $8$ also permits
+the defining $\mathrm{Sp}(8)$ module, the spin module for
+$\mathrm{Spin}(7)$, and the vector and half-spin modules for
+$\mathrm{Spin}(8)$.  Here $\mathrm{Sp}(d)$ denotes the compact
+symplectic group in complex dimension $d$.
+
+If such a bilinear form $B$ existed, the center of $G^\circ$ would
+act by scalars, and $G=G^\circ Z(G)$ would imply
+$U_i^{\mathsf T}BU_i=cB$ for some $c\ne0$.
+The eigenvalue multiset would then be invariant under $z\mapsto c/z$.
+The multiplicities $r-1$ and $1$ differ, so $1$ must map to itself and
+$\lambda$ to itself.  Thus $c=1$ and $\lambda^2=1$, a contradiction.
+Only the defining $\SU(r)$ image remains, as required.
+\end{proof}
+
+The determinant and finite-index arguments in the proof of
+Theorem~\ref{thm:main} now give the full and pure closure formulas.
+The exceptional-type finite-image statement and projective universality
+are therefore further consequences, not independent classification
+results.  This reduction does not assert that the same formulas occur
+verbatim in \cite{FLW}.  For nonsimply-laced types, one cannot use the
+single-conjugacy-class step without further justification; the direct
+proof in Section~\ref{sec:direct} still applies in its stated interval.
+
+\subsection*{Claim-by-claim status}
+\renewcommand{\arraystretch}{1.13}
+\begin{longtable}{@{}p{0.26\textwidth}p{0.34\textwidth}p{0.34\textwidth}@{}}
+\toprule
+Item in this note & Prior result or deduction & Status used here\\
+\midrule\endhead
+Generalized Burau matrices and invariant form & Squier \cite{Squier}; modern convention in \cite{BQ}. & Known construction, recalled explicitly.\\
+Dynkin equations, ranks, exponents, and positivity & Root-system data and the Cartan spectral identity \cite{Etingof,Damianou}. & Standard data and a direct spectral consequence.\\
+$E_6,E_7,E_8$ compact closure & Proposition~\ref{prop:flw}, applying \cite{FLW}. & Existing-theorem consequence; the rank-two proof is an alternative derivation.\\
+Full unitary components and pure-group closure & Determinant image and finite index, once $\SU(r)$ is contained. & Elementary consequences of the closure statement.\\
+Finite images in the positive $E$ interval & Infinite projective closure for $\theta\ne0$; Coxeter image at $0$. & A consequence within the stated interval, not a general classification.\\
+Non-Clifford generators & Pauli/symplectic formalism \cite{DDM} and the trace estimate in Lemma~\ref{lem:clifford}. & Elementary consequence. An identical published formulation has not been located; no priority claim is made.\\
+Three-qubit universality and finite $E_8$ limit & Closure implies universality; finite $W(E_8)$ gate realizations precede this note \cite{Planat,ARW}. & Application and explicit family; not a new universality criterion.\\
+General-arrangement convolution and middle quotient & Existing constructions \cite{AH,Hiroe,HN}. & Recalled formulas with hypotheses; not a new functor.\\
+Six-line monodromy and descent calculation & Burau pullback, fixed based loops, and a routine module quotient. & Explicit computation. Independent novelty of the particular presentation is unestablished.\\
+\bottomrule
+\end{longtable}
+
+\paragraph{Parameter and scope checks.}
+Marin's compact specialization result assumes a transcendental parameter
+on the unit circle sufficiently near $1$ \cite[Theorem~4]{Marin}; it
+cannot alone be quoted for every algebraic parameter in our interval.
+That limitation does not rescue novelty of the exceptional-type result,
+because Proposition~\ref{prop:flw} supplies a different existing theorem.
+Funar--Kohno analyze rank-two root-of-unity images \cite{FK}; parameter
+sign conventions must be matched before transferring their exceptional
+orders.  A general arrangement pullback need not have the same image
+as the whole braid group, as already noted above.
+
+\paragraph{Research status.}
+This is an expository and computational note.
+The explicit gate matrices, the common unitarization, and the direct
+closure proof are useful to retain, but do not by themselves demonstrate
+a new principal theorem.  The literature comparison is targeted to the
+claims made here, rather than a claim of exhaustive priority clearance.
+No new theorem is inferred merely from failure to locate an identical
+wording, parameterization, or example.
+
+\appendix
+\section{Writing reflection arrangements by Dynkin type}\label{sec:dynkin}
+\subsection*{The scope of the type notation}
+A general affine arrangement is specified by equations
+\[
+\A=\{H_a:\ell_a(x)=b_a\}_{a=1}^N,
+\qquad Q_{\A}(x)=\prod_{a=1}^N(\ell_a(x)-b_a).
+\]
+There is no rule assigning a Dynkin type to every such arrangement.
+The notation ``type $X_r$'' used here means that, after a linear change
+of coordinates and removal of any redundant ambient factor, the
+arrangement is the complexified reflection arrangement of a root system
+$\Phi(X_r)$.  A common translation is allowed if the original equations
+are affine.  In particular, counting hyperplanes or drawing their
+intersection graph does not determine a Dynkin type.
+
+For a reduced crystallographic root system $\Phi\subset V_{\mathbb R}^*$,
+the construction is
+\begin{equation}\label{eq:root-arrangement}
+\boxed{\quad \A(X_r)=\{\ker\alpha:\alpha\in\Phi^+(X_r)\},
+\qquad Q_{X_r}(x)=\prod_{\alpha\in\Phi^+(X_r)}\alpha(x).\quad}
+\end{equation}
+Here $V=V_{\mathbb R}\otimes\C$, and one positive root is used from
+each pair $\{\alpha,-\alpha\}$.  Thus the Dynkin diagram has $r$
+vertices, whereas the arrangement has $|\Phi|/2$ hyperplanes.
+The root-system construction is implemented in \cite{SageArr}.
+
+The irreducible crystallographic types are
+$A_n,B_n,C_n,D_n,E_6,E_7,E_8,F_4,G_2$; reducible types give products
+of arrangements.  See \cite[Theorem 23.7]{Etingof} for the classification.
+Finite real reflection arrangements also include the noncrystallographic
+Coxeter types $H_3,H_4,I_2(m)$, for which one uses Coxeter rather than
+crystallographic Dynkin data.
+
+\subsection*{Classical types in coordinates}
+For $A_n$, use
+$V=\{(x_1,\ldots,x_{n+1})\in\C^{n+1}:\sum_i x_i=0\}$.
+For $B_n,C_n,D_n$, use $V=\C^n$.  In the table, every displayed linear
+form is set equal to zero, with $i<j$ in the appropriate coordinate range.
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lll}
+\toprule
+Type & Defining linear forms & Number of hyperplanes\\
+\midrule
+$A_n$ & $x_i-x_j$ & $n(n+1)/2$\\
+$B_n$ & $x_i,\ x_i-x_j,\ x_i+x_j$ & $n^2$\\
+$C_n$ & $2x_i,\ x_i-x_j,\ x_i+x_j$ & $n^2$\\
+$D_n$ & $x_i-x_j,\ x_i+x_j$ & $n(n-1)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+These follow by taking kernels of the standard classical roots
+\cite[\S20.3]{Etingof}; the $B_n$ equations are also listed explicitly
+in \cite{M2B}.  Consequently, up to nonzero constants,
+\begin{align*}
+Q_{A_n}&=\prod_{1\le i<j\le n+1}(x_i-x_j),\\
+Q_{B_n}=Q_{C_n}&=\left(\prod_{i=1}^n x_i\right)
+                 \prod_{1\le i<j\le n}(x_i^2-x_j^2),\\
+Q_{D_n}&=\prod_{1\le i<j\le n}(x_i^2-x_j^2).
+\end{align*}
+The $A_n$ polynomial is restricted to $V$ above; using all of
+$\C^{n+1}$ instead gives the familiar nonessential braid arrangement
+with a redundant diagonal direction.
+
+For example,
+\[
+\A(B_3)=\{x_1=0,x_2=0,x_3=0\}
+\cup\{x_i-x_j=0,x_i+x_j=0:1\le i<j\le3\}
+\]
+has nine planes, even though its Dynkin diagram has three vertices.
+The arrangement of type $D_3$ has six planes and is isomorphic to
+type $A_3$; the irreducible $D_n$ family is usually indexed by $n\ge4$.
+
+\paragraph{Why $B_n$ and $C_n$ give the same arrangement.}
+Their root systems use $\pm e_i$ and $\pm2e_i$, respectively, together
+with $\pm e_i\pm e_j$.  Multiplying a normal by $2$ does not change
+its kernel.  Hence
+\[
+\A(B_n)=\A(C_n)
+\]
+in these coordinates.  The hyperplane set alone therefore does not
+retain the distinction between these dual root systems or the direction
+of the double-edge arrow in their Dynkin diagrams.
+
+\subsection*{Recovering the $E$-type equations from the diagram}
+One need not list coordinates in $\mathbb R^8$ to specify the exceptional
+arrangements.  Choose simple roots $\alpha_1,\ldots,\alpha_r$, and use
+the coordinates $z_i=\alpha_i(x)$.  If a positive root has simple-root
+coefficients $c=(c_1,\ldots,c_r)$, its hyperplane is exactly
+\begin{equation}\label{eq:root-coefficient-hyperplane}
+H_c=\{c_1z_1+\cdots+c_rz_r=0\}.
+\end{equation}
+
+For $E_r$, $r=6,7,8$, use the diagram with edge set
+\[
+\mathcal E_r=\{\{i,i+1\}:1\le i\le r-2\}\cup\{\{3,r\}\}.
+\]
+For $r=6$ this agrees with the numbering used in
+Section~\ref{sec:general-burau}.  Its Cartan matrix is
+\[
+C_{ii}=2,\qquad C_{ij}=-1\ \text{if }\{i,j\}\in\mathcal E_r,
+\qquad C_{ij}=0\ \text{otherwise}.
+\]
+Start with the unit vectors $e_i$ in the simple-root coefficient lattice
+and repeatedly apply
+\begin{equation}\label{eq:root-generation}
+s_i(c)=c-\left(\sum_j C_{ij}c_j\right)e_i.
+\end{equation}
+Closing under these reflections gives all roots; retain those whose
+coefficients are all nonnegative, and apply
+\eqref{eq:root-coefficient-hyperplane}.  This is the usual simple-reflection
+generation of a finite root system \cite[\S\S21--23]{Etingof}, written
+as an explicit equation-generation procedure.
+
+The following counts distinguish arrangement size from rank:
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Type & Rank & Roots & Hyperplanes\\
+\midrule
+$E_6$ & $6$ & $72$ & $36$\\
+$E_7$ & $7$ & $126$ & $63$\\
+$E_8$ & $8$ & $240$ & $120$\\
+$F_4$ & $4$ & $48$ & $24$\\
+$G_2$ & $2$ & $12$ & $6$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The three $E$-type counts were also checked in the original note by the finite orbit procedure
+\eqref{eq:root-generation}.  The same root-kernel recipe
+\eqref{eq:root-arrangement} applies to $F_4$ and $G_2$.
+
+\subsection*{From the Dynkin diagram to the Burau matrices}
+For the representation in Section~\ref{sec:general-burau}, the relevant
+data are the Coxeter labels.  The translation is
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Dynkin adjacency & $m_{ij}$ & Coefficient of $e_i$ in $R_i e_j$\\
+\midrule
+No edge & $2$ & $0$\\
+Single edge & $3$ & $t$\\
+Double edge & $4$ & $\sqrt2\,t$\\
+Triple edge & $6$ & $\sqrt3\,t$\\
+\bottomrule
+\end{tabular}
+\end{center}
+This is direct substitution into \eqref{eq:coxeter-burau} for $i\ne j$.
+For $B_n$ and $C_n$, the Coxeter graph is the path with
+$m_{i,i+1}=3$ for $i<n-1$ and $m_{n-1,n}=4$.
+Thus both types give the same matrices in this symmetric normalization.
+The arrow records root lengths, which this Coxeter-matrix construction
+does not require.
+
+To construct a crystallographic arrangement in SageMath \cite{SageArr}:
+\begin{verbatim}
+A = hyperplane_arrangements.Coxeter("B3")
+A.hyperplanes()
+A.defining_polynomial()
+E = hyperplane_arrangements.Coxeter("E6")
+\end{verbatim}
+The constructor may use a redundant ambient space (for example for
+$A_n$ or $E_6$); its essential rank is the Dynkin subscript.
+
+\paragraph{Notation and limits.}
+The ordinary braid group on $n$ strands is of type $A_{n-1}$:
+$\operatorname{Art}(A_{n-1})\cong\mathsf B_n$.
+It should not be confused with $\operatorname{Art}(B_n)$, the Artin
+group of Dynkin type $B_n$.
+Also, a general affine arrangement is not automatically an affine
+Dynkin arrangement.  For instance, the triangle
+$\{y=0,y=x,y=1-x\}$ used later has no common intersection, so it
+cannot be translated into a finite central reflection arrangement.
+Its equations remain valid input data without a Dynkin label.
+
+\section{Scope and existing constructions}\label{sec:general-arrangement}
+Let $\A$ be a finite arrangement of affine hyperplanes in $\C^\ell$, and put
+$M(\A)=\C^\ell\setminus\bigcup_{H\in\A}H$.
+In these appendices $\kappa$ denotes the additive convolution parameter,
+not the gate eigenvalue $\lambda$ used in the main text.
+Fix a one-dimensional direction $Y$.  The minimal directional closure
+$\B=\A^Y$ adds the collision hyperplanes necessary to make the projection
+along $Y$ a bundle of punctured affine lines.  This closure and the
+corresponding middle convolution are part of the existing theory
+\cite{AH,Hiroe}.  The relationship between Long--Moody induction and Katz
+middle convolution, including applications to fiber-type arrangements,
+was developed in \cite{HN}.  Earlier homological generalizations of
+Magnus, Burau, and Gassner representations occur in \cite{CS}.
+
+Two distinctions will be maintained throughout.  First, the full convolution
+space is not automatically the middle-convolution space: the invariant
+subspace $K+L_\kappa$ must be divided out.  Second, a representation on
+$M(\B)$ does not automatically descend to $M(\A)$.  Neither passing to the
+middle quotient nor writing down all meridian matrices removes the second
+issue.
+
+\section{The algebraic construction in arbitrary rank}
+The holonomy Lie algebra has the presentation
+\begin{equation}\label{eq:holonomy}
+\h(\A)=\operatorname{Lie}\langle t_H:H\in\A\rangle\big/
+\left\langle\left[t_H,\sum_{H'\supset X}t_{H'}\right]:
+ X\in L_2(\A),\ H\supset X\right\rangle .
+\end{equation}
+Here $L_2(\A)$ consists of the nonempty intersections of codimension two.
+Thus an input is a finite-dimensional vector space $E$ and endomorphisms
+$A_H$ satisfying the displayed commutator relations.  Extend the input to
+$\B$ by setting $A_D=0$ for $D\in\B\setminus\A$.
+
+Choose coordinates $(x,y)$ with $Y$ the $y$-direction.  Write the transverse
+hyperplanes as $H_i=\{y=f_i(x)\}$, $1\leq i\leq n$; all other hyperplanes
+are parallel to $Y$.  The functions $f_i$ are affine linear.  A nonconstant
+difference $f_i-f_j$ defines a collision hyperplane in the base, whose
+inverse image is included in $\B$.  Constant nonzero differences give no
+collision divisor.  We identify a base hyperplane with its inverse image
+when indexing residues.
+
+Set $W=E^n$ and use blocks indexed by $i$, with the coordinates of $E$
+inside each block.  The known convolution formulas specialize to
+\begin{align}
+C_{H_i}&=\sum_{j=1}^n E_{ij}\otimes A_{H_j}
+          +\kappa E_{ii}\otimes\Id_E,\label{eq:transverse}\\
+C_D&=I_n\otimes A_D+
+\sum_{\substack{i<j\\\{f_i=f_j\}=D}}
+\bigl((E_{ii}-E_{ij})\otimes A_{H_j}
+ +(E_{jj}-E_{ji})\otimes A_{H_i}\bigr).
+\label{eq:parallel}
+\end{align}
+These are the block form of \cite[Proposition~3.1]{AH}.  They define a representation
+of $\h(\B)$.  The compatibility with the Lie-algebraic convolution functor
+is \cite[Theorem 4.7]{Hiroe}; constructing these matrices requires no
+integration of a differential equation.
+
+The two invariant subspaces and the middle quotient are
+\begin{equation}\label{eq:middle}
+K=\bigoplus_i e_i\otimes\ker A_{H_i},\qquad
+L_\kappa=\ker\Bigl(\sum_i C_{H_i}\Bigr),\qquad
+\mc^Y_\kappa(E)=W/(K+L_\kappa).
+\end{equation}
+For $\kappa\ne0$,
+\[
+L_\kappa=\{(v,\ldots,v):(\sum_i A_{H_i}+\kappa\Id_E)v=0\},
+\qquad K\cap L_\kappa=0.
+\]
+In particular, if $r=\dim E$, the output dimension is
+\[
+nr-\sum_i\dim\ker A_{H_i}
+ -\dim\ker(\sum_i A_{H_i}+\kappa\Id_E).
+\]
+Constant intertwiners induce intertwiners on the quotient, giving
+\begin{equation}\label{eq:functor}
+\mc^Y_\kappa:\Rep\h(\A)\longrightarrow\Rep\h(\A^Y).
+\end{equation}
+This is an endofunctor on the original representation category when
+$\A=\A^Y$.  Otherwise, the codomain in \eqref{eq:functor} must not be
+silently replaced by $\Rep\h(\A)$.
+
+\section{Equal weights and the Burau pullback}\label{sec:equal}
+Take $E=\C$, $A_{H_i}=\alpha$, $A_D=0$ on every original parallel
+hyperplane, and $\kappa=\alpha\ne0$.  Then
+\begin{equation}\label{eq:equal}
+C_{H_i}=\alpha e_i(\one^{\mathsf T}+e_i^{\mathsf T}),\qquad
+C_D=\alpha\sum_{\substack{i<j\\\{f_i=f_j\}=D}}
+ (e_i-e_j)(e_i-e_j)^{\mathsf T}.
+\end{equation}
+The quotient in \eqref{eq:middle} is still explicitly checked:
+$K=0$, and $L_\alpha=0$ because $(n+1)\alpha\ne0$.  Hence the
+\emph{additive} middle-convolution space has dimension $n$ in this case.
+
+Let $m=n+1$ and define
+\begin{equation}\label{eq:F}
+F:M(\B)\longrightarrow\Conf_m(\C),\qquad
+F(x,y)=(f_1(x),\ldots,f_n(x),y).
+\end{equation}
+All points on the right are distinct by construction of $\B$.
+On $V=\C^m/\C\one$, use quotient coordinates $w_i-w_m$.
+Let $T_{ij}$ be the induced action of
+$(e_i-e_j)(e_i-e_j)^{\mathsf T}$ from $\C^m$ on $V$.
+
+\begin{proposition}\label{prop:gauge}
+Set $S=I_n+J_n$, where $J_n$ is the all-ones matrix.  In the above
+quotient coordinates,
+\[
+S(C_{H_i}/\alpha)S^{-1}=T_{i,m},\qquad
+S\bigl((e_i-e_j)(e_i-e_j)^{\mathsf T}\bigr)S^{-1}=T_{ij}
+\quad(i,j\le n).
+\]
+Consequently, the connection $d-\sum_H C_H\,d\log f_H$ is, after
+this constant change of basis, the pullback of
+$d-\alpha\sum_{i<j}T_{ij}\,d\log(z_i-z_j)$.
+\end{proposition}
+\begin{proof}
+In quotient coordinates, $T_{i,m}=(\one+e_i)e_i^{\mathsf T}$.
+Since $S e_i=\one+e_i$ and $e_i^{\mathsf T}S=\one^{\mathsf T}+e_i^{\mathsf T}$,
+the first identity follows.  Every $e_i-e_j$ has coordinate sum zero,
+so $S$ acts as the identity on it and commutes with its outer product.
+The logarithmic forms pull back to $d\log(y-f_i)$ and
+$d\log(f_i-f_j)$, respectively.  Grouping proportional differences
+gives \eqref{eq:parallel}.
+\end{proof}
+
+Put $q=\exp(2\pi i\alpha)$.  For generic parameters, this is the
+homological reduced Burau representation restricted to $P_m$ and pulled
+back by $F_*$.  One sufficient regime for the period comparison used here
+is $\alpha\notin\mathbb Z$ and $m\alpha\notin\mathbb Z$.
+The relevant local system has common monodromy $q$ at the $m$ finite
+punctures; its twisted first homology has dimension $m-1$.
+The connection/homology comparison is part of the standard framework
+reviewed in \cite[\S3]{Kohno}, together with the convolution comparison
+of \cite[Theorem 4.2]{AH}.
+
+\begin{remark}
+At resonant parameters, one must distinguish the full homological Burau
+module, its algebraic specialization, and the middle-convolution quotient.
+For example, trivial monodromy at infinity can contribute a boundary
+subspace to the topological middle quotient.  The generic identification
+above is not a claim that all these spaces have the same rank at every
+special parameter.
+\end{remark}
+
+\section{Closed formulas for based pure-braid matrices}
+Use the unreduced Burau convention with block
+$\left(\begin{smallmatrix}1-q&q\\1&0\end{smallmatrix}\right)$ for
+$\sigma_i$, and then pass to $\C^m/\C\one$.  We act on column vectors;
+in products of paths the right-hand path is traversed first.  Positive
+half twists are counterclockwise.  Write
+\[
+A_{ij}=\sigma_{j-1}\cdots\sigma_{i+1}\sigma_i^2
+       \sigma_{i+1}^{-1}\cdots\sigma_{j-1}^{-1}.
+\]
+
+\begin{proposition}\label{prop:pure}
+Let $n=m-1$ and $1\le i<j\le m$.  In quotient coordinates,
+\begin{equation}\label{eq:pure}
+\beta_q(A_{ij})=I_n+(q-1)u_{ij}v_{ij}^{\mathsf T}.
+\end{equation}
+For $j\le n$,
+\[
+u_{ij}=q e_i+(q-1)\sum_{i<k<j}e_k-e_j,
+\qquad v_{ij}=e_i-e_j.
+\]
+For $j=m$,
+\[
+u_{i,m}=\sum_{k<i}e_k+(q+1)e_i+q\sum_{k>i}e_k,
+\qquad v_{i,m}=e_i.
+\]
+In particular,
+\[
+\det\beta_q(A_{ij})=q^2,\qquad
+(\beta_q(A_{ij})-I)(\beta_q(A_{ij})-q^2I)=0.
+\]
+\end{proposition}
+\begin{proof}
+For $i<n$, the square of the adjacent Burau block differs from $I$ by
+$(q-1)(q e_i-e_{i+1})(e_i-e_{i+1})^{\mathsf T}$.
+Conjugate this rank-one factorization by
+$\beta_q(\sigma_{j-1}\cdots\sigma_{i+1})$.
+Moving the last nonzero entry successively to the right produces the
+intermediate coefficients $q-1$.  At the last strand, the quotient
+generator has final column $(-1,\ldots,-1,-q)^{\mathsf T}$; applying it
+gives the stated formula for $u_{i,m}$ and $v_{i,m}$.
+The case $i=n,j=m$ follows by squaring this quotient generator directly.
+Finally $v_{ij}^{\mathsf T}u_{ij}=q+1$, giving the determinant and
+quadratic identities.
+\end{proof}
+
+These are based group matrices, not individual exponentials of residues.
+For a general arrangement loop $\gamma$, one computes
+$\rho(\gamma)=\beta_q(F_*\gamma)$ from its braid word.  Determining that
+word includes the paths from a common basepoint.  At a multiple collision,
+the local braid is a full twist on the colliding cluster; different
+clusters and the connecting path must also be accounted for.
+
+\section{A six-line example with fixed meridians}\label{sec:six-lines}
+Start with $\A=\{y=0,y=x,y=1-x\}$ and project along $y$.
+Then
+\[
+\B=\{y=0,y=x,y=1-x,x=0,x=1,x=\tfrac12\}.
+\]
+Choose basepoint $(x,y)=(1/4,2)$, labelled configuration
+$(0,x,1-x,y)$, and positive local circles.  For the three transverse
+meridians keep $x=1/4$ and take the $y$-stems below the real axis to just
+right of the relevant puncture.  For the other meridians keep $y=2$:
+the stems to $x=0$ and $x=1/2$ are real, ending respectively to the right
+and left; the stem to $x=1$ passes above $x=1/2$ and ends to the left of
+$1$.  Return along the reverse of each stem after the local circle.
+
+With $d=q-1$, all six matrices are specified by
+$M_H=I_3+d u_Hv_H^{\mathsf T}$ and the following table.
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{llll}
+\toprule
+$H$ & $F_*(m_H)$ & $u_H^{\mathsf T}$ & $v_H^{\mathsf T}$\\
+\midrule
+$y=0$ & $A_{14}$ & $(q+1,q,q)$ & $(1,0,0)$\\
+$y=x$ & $A_{24}$ & $(1,q+1,q)$ & $(0,1,0)$\\
+$y=1-x$ & $A_{34}$ & $(1,1,q+1)$ & $(0,0,1)$\\
+$x=0$ & $A_{12}$ & $(q,-1,0)$ & $(1,-1,0)$\\
+$x=1$ & $A_{13}$ & $(q,q-1,-1)$ & $(1,0,-1)$\\
+$x=1/2$ & $A_{23}$ & $(0,q,-1)$ & $(0,1,-1)$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Explicitly, the original hyperplanes have matrices
+\begin{align*}
+M_{y=0}&=\begin{pmatrix}q^2&0&0\\qd&1&0\\qd&0&1\end{pmatrix},&
+M_{y=x}&=\begin{pmatrix}1&d&0\\0&q^2&0\\0&qd&1\end{pmatrix},&
+M_{y=1-x}&=\begin{pmatrix}1&0&d\\0&1&d\\0&0&q^2\end{pmatrix}.
+\end{align*}
+The additional hyperplanes have matrices
+\begin{align*}
+M_{x=0}&=\begin{pmatrix}1+qd&-qd&0\\-d&q&0\\0&0&1\end{pmatrix},&
+M_{x=1}&=\begin{pmatrix}1+qd&0&-qd\\d^2&1&-d^2\\-d&0&q\end{pmatrix},\\
+M_{x=1/2}&=\begin{pmatrix}1&0&0\\0&1+qd&-qd\\0&-d&q\end{pmatrix}.&&
+\end{align*}
+These extra matrices are nonidentity for $q\ne1$, including $q=-1$.
+Thus this particular group representation does not descend to the
+original three-line complement for $q\ne1$.
+
+As consistency checks, setting $S=I_3+J_3$ and denoting by $\widehat C_H$
+the residue in \eqref{eq:equal} with $\alpha=1$, one obtains
+\[
+\left.\frac{dM_H}{dq}\right|_{q=1}=S\widehat C_HS^{-1}
+\quad\text{for all six hyperplanes}.
+\]
+The standard pure-braid full-twist product also gives
+\[
+M_{12}M_{13}M_{23}M_{14}M_{24}M_{34}=q^4I_3.
+\]
+The first identity is a first-order check, not an identification of
+$M_H$ with the exponential of its residue at finite parameter.
+
+\section{The largest descended quotient and its obstruction}\label{sec:descent}
+The natural surjection $p:\h(\B)\to\h(\A)$ kills precisely the Lie
+ideal generated by $t_D$, $D\in\B\setminus\A$.  For a finite-dimensional
+$\h(\B)$-module $V$ with action matrices $B_H$, define
+\begin{equation}\label{eq:saturation}
+N_0=\sum_{D\in\B\setminus\A}\im B_D,\qquad
+N_{k+1}=N_k+\sum_{H\in\B}B_HN_k.
+\end{equation}
+
+\begin{proposition}\label{prop:descent}
+The sequence in \eqref{eq:saturation} stabilizes after finitely many
+strict dimension increases.  If its stable value is $N$, then $V/N$ is
+the largest quotient of $V$ that factors through $\h(\A)$.
+\end{proposition}
+\begin{proof}
+The stable space is the smallest invariant subspace containing all
+$\im B_D$.  Thus every additional generator acts as zero on $V/N$, and
+so does the ideal they generate.  Conversely, the kernel of any quotient
+map on which those generators act trivially must contain this invariant
+subspace.  Finite dimensionality gives termination.
+\end{proof}
+
+\begin{lemma}\label{lem:irred}
+For $\alpha\ne0$, the operators
+$C_i=\alpha e_i(\one^{\mathsf T}+e_i^{\mathsf T})$ on $\C^n$
+act irreducibly.
+\end{lemma}
+\begin{proof}
+The matrix whose $i$th row is $\one^{\mathsf T}+e_i^{\mathsf T}$ is
+$I_n+J_n$, which is invertible.  Given a nonzero vector in an invariant
+subspace, some $C_i$ therefore sends it to a nonzero multiple of $e_i$.
+For $j\ne i$, $C_j e_i=\alpha e_j$.  Hence the subspace contains every
+coordinate vector.
+\end{proof}
+
+\begin{corollary}\label{cor:zero}
+For the equal-weight specialization of Section~\ref{sec:equal}, if $\A^Y\ne\A$,
+then its largest quotient descending to $\h(\A)$ is zero.
+\end{corollary}
+\begin{proof}
+An added hyperplane has at least one collision class of size at least
+two.  Its residue is a nonzero multiple of the sum of the complete-graph
+Laplacians on its disjoint collision classes, so it is nonzero.  The
+invariant subspace generated by its image is nonzero and hence, by
+Lemma~\ref{lem:irred}, equals the whole module.
+\end{proof}
+
+This corollary concerns Lie-algebra descent.  For an actual group
+representation $\rho:G_{\B}\to\mathrm{GL}(V)$, the corresponding
+largest descended quotient is
+\[
+V\big/\operatorname{span}\{\rho(g)(\rho(m_D)-I)v:
+g\in G_{\B},\ D\in\B\setminus\A,\ v\in V\}.
+\]
+It kills additional meridians rather than additional residues.  In
+particular, at resonant parameters the two criteria must not be
+identified without an additional argument.
+
+
+\section{Reproducibility of the arrangement calculations}
+The accompanying \texttt{legacy\_arrangement/} directory contains the
+Python/SymPy sources and regenerated reports.  Those reports record checks of
+the block relations, middle quotients, invariant saturations, Fox
+derivatives, 34 pure generators for $m=3,4,5,6$, the six first derivatives,
+and the full-twist identity.  All four arrangement verification scripts
+were rerun successfully for this public note package.
+The path-tracking check of the six braid words uses floating-point
+arithmetic and is not an interval-arithmetic certificate.
+The separate Coxeter verification files are described in the main text.
+Neither a finite word search nor floating-point matrix checks are used
+as proofs of density or of infinitude.
+
+The reflection arrangements of types $E_6,E_7,E_8$ are not fiber-type,
+by the supersolvability classification \cite[Theorem~1.2]{HR}.
+Thus results restricted to fiber-type arrangements do not alone cover
+these cases.  Their Coxeter--Burau representations nevertheless exist
+independently of that restriction.  The arrangement-group interpretation
+of Artin groups is also reviewed in \cite[\S2.1]{MarinKrammer}.
+\begin{thebibliography}{99}
+\bibitem{Squier}
+C.~C.~Squier, \emph{Matrix representations of Artin groups},
+Proc. Amer. Math. Soc. \textbf{103} (1988), 49--53.
+\url{https://www.maths.ed.ac.uk/~v1ranick/papers/squier2.pdf}.
+\bibitem{BQ}
+A.~Bapat and H.~Queffelec, \emph{Some remarks about the faithfulness
+of the Burau representation of Artin--Tits groups}, arXiv:2409.00144.
+\url{https://arxiv.org/abs/2409.00144}.
+\bibitem{Damianou}
+P.~A.~Damianou, \emph{On the characteristic polynomial of Cartan
+matrices and Chebyshev polynomials}, arXiv:1110.6620v4.
+\url{https://arxiv.org/abs/1110.6620}.
+\bibitem{Marin}
+I.~Marin, \emph{Infinitesimal Hecke algebras II}, arXiv:0911.1879,
+especially Theorems 1 and 4.
+\url{https://arxiv.org/abs/0911.1879}.
+\bibitem{FK}
+L.~Funar and T.~Kohno, \emph{On Burau representations at roots of
+unity}, arXiv:0907.0568.
+\url{https://arxiv.org/abs/0907.0568}.
+\bibitem{DDM}
+J.~Dehaene and B.~De Moor, \emph{Clifford group, stabilizer states,
+and linear and quadratic operations over GF(2)},
+Phys. Rev. A \textbf{68} (2003), 042318.
+\url{https://arxiv.org/abs/quant-ph/0304125}.
+\bibitem{Planat}
+M.~Planat, \emph{Clifford group dipoles and the enactment of
+Weyl/Coxeter group $W(E_8)$ by entangling gates},
+General Mathematics Notes \textbf{2}(1) (2011), 96--113.
+\url{https://arxiv.org/abs/0904.3691}.
+\bibitem{ARW}
+M.~Amy, N.~J.~Ross and S.~Wesley,
+\emph{A sound and complete equational theory for 3-qubit
+Toffoli--Hadamard circuits}, arXiv:2407.11152.
+\url{https://arxiv.org/abs/2407.11152}.
+\bibitem{Negami}
+H.~Negami, \emph{Universal Quantum Gate Sets from Middle Convolution:
+Braid Dynamics and Exact Synthesis Costs}, revised working draft,
+10 November 2026.
+\bibitem{NegamiGates}
+H.~Negami, \emph{Quantum gates from the middle convolution of twisted
+Burau representations}, arXiv:2610.00293v1 (2026).
+\url{https://arxiv.org/abs/2610.00293v1}.
+\bibitem{NegamiKZ}
+H.~Negami, \emph{Long-Moody construction of braid group representations
+and Haraoka's multiplicative middle convolution for KZ-type equations},
+arXiv:2503.14840v3 (2026).
+\url{https://arxiv.org/abs/2503.14840v3}.
+\bibitem{Barenco}
+A.~Barenco, C.~H.~Bennett, R.~Cleve, D.~P.~DiVincenzo, N.~Margolus,
+P.~Shor, T.~Sleator, J.~A.~Smolin and H.~Weinfurter,
+\emph{Elementary gates for quantum computation},
+Phys. Rev. A \textbf{52} (1995), 3457--3467.
+\url{https://arxiv.org/abs/quant-ph/9503016}.
+
+\bibitem{FLW}
+M.~H.~Freedman, M.~J.~Larsen and Z.~Wang,
+\emph{The two-eigenvalue problem and density of Jones representation
+of braid groups}, Comm. Math. Phys. \textbf{228} (2002), 177--199,
+especially Theorems 1.1, 1.4 and 1.6.
+\url{https://arxiv.org/abs/math/0103200}.
+
+\bibitem{Etingof}
+P.~Etingof, \emph{Lie Groups and Lie Algebras}, MIT OpenCourseWare,
+18.745 (Fall 2020), \S\S20--23.
+\href{https://ocw.mit.edu/courses/18-745-lie-groups-and-lie-algebras-i-fall-2020/mit18_745_f20_lec_full.pdf}{Lecture notes (PDF)}.
+
+\bibitem{SageArr}
+The Sage Developers, \emph{SageMath Reference Manual: Library of
+Hyperplane Arrangements}, \texttt{Coxeter}, accessed 6 November 2026.
+\href{https://doc.sagemath.org/html/en/reference/discrete_geometry/sage/geometry/hyperplane_arrangement/library.html}{Coxeter arrangement constructor}.
+
+\bibitem{M2B}
+Macaulay2, \emph{HyperplaneArrangements package: typeB},
+accessed 6 November 2026.
+\href{https://macaulay2.com/doc/Macaulay2/share/doc/Macaulay2/HyperplaneArrangements/html/_type__B_lp__Z__Z_cm__Ring_rp.html}{Type B arrangement documentation}.
+
+\bibitem{SageArtin}
+\begingroup\raggedright
+The Sage Developers, \emph{SageMath Reference Manual: Artin Groups},
+\texttt{ArtinGroupElement.burau\_matrix}, accessed 6 November 2026.
+\url{https://doc.sagemath.org/html/en/reference/groups/sage/groups/artin.html}.
+\par\endgroup
+
+\bibitem{MarinKrammer}
+I.~Marin, \emph{Krammer representations for complex braid groups},
+arXiv:0711.3096, \S2.1.
+\url{https://arxiv.org/abs/0711.3096}.
+
+\bibitem{HR}
+T.~Hoge and G.~R\"ohrle, \emph{On supersolvable reflection arrangements},
+arXiv:1209.1919v3 (2013), Theorem 1.2.
+\url{https://arxiv.org/abs/1209.1919v3}.
+
+\bibitem{AH}
+S.~Adachi and K.~Hiroe,
+\emph{Middle convolution for affine hyperplane arrangements and Aomoto
+realizability}, arXiv:2601.00544v4 (29 September 2026).
+\url{https://arxiv.org/abs/2601.00544v4}.
+
+\bibitem{Hiroe}
+K.~Hiroe, \emph{Middle convolution for Lie algebra representations},
+arXiv:2605.09828v3 (13 October 2026), Theorem 4.7.
+\url{https://arxiv.org/abs/2605.09828}.
+
+\bibitem{HN}
+K.~Hiroe and H.~Negami, \emph{Long-Moody construction of braid
+representations and Katz middle convolution}, arXiv:2303.05770 (2023).
+\url{https://arxiv.org/abs/2303.05770}.
+
+\bibitem{CS}
+D.~C.~Cohen and A.~I.~Suciu,
+\emph{Homology of iterated semidirect products of free groups},
+J.~Pure Appl.~Algebra \textbf{126} (1998), 87--120.
+\href{https://doi.org/10.1016/S0022-4049(96)00153-3}{doi:10.1016/S0022-4049(96)00153-3}.
+
+\bibitem{Kohno}
+T.~Kohno, \emph{Hyperplane arrangements, local system homology and
+iterated integrals}, Adv.~Stud.~Pure Math.~\textbf{62} (2012), 157--174.
+\url{https://www.ms.u-tokyo.ac.jp/~kohno/papers/kohno_aspm.pdf}.
+\end{thebibliography}
+\end{document}

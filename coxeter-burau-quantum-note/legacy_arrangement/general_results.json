@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "rank_one_comparison": "PASS",
+    "noncommuting_closed_full": {
+      "codimension_two_flats": 1,
+      "commutators_checked": 3
+    },
+    "noncommuting_closed_middle": {
+      "codimension_two_flats": 1,
+      "commutators_checked": 3
+    },
+    "noncommuting_changed_full": {
+      "codimension_two_flats": 1,
+      "commutators_checked": 4
+    },
+    "noncommuting_changed_middle": {
+      "codimension_two_flats": 1,
+      "commutators_checked": 4
+    }
+  },
+  "changed_direction_middle_rank": 3,
+  "changed_direction_descended_rank": 0,
+  "equal_weight_triangle": {
+    "rank": 3,
+    "saturation_dimensions": [
+      2,
+      3
+    ],
+    "descended_rank": 0
+  },
+  "lambda_zero_middle_descended_rank": 1,
+  "group_P3_kill_A12_generic_rank": 0,
+  "group_P3_kill_A12_at_q1_rank": 2,
+  "status": "ALL CHECKS PASS"
+}

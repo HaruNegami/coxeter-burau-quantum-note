@@ -1,0 +1,59 @@
+{
+  "convention": "dV = sum C_H dlog(f_H) V; residues are not based monodromy",
+  "equations": [
+    "y",
+    "x - y",
+    "x + y - 1",
+    "x",
+    "x - 1",
+    "x - 1/2"
+  ],
+  "added_equations": [
+    "x",
+    "x - 1",
+    "x - 1/2"
+  ],
+  "generic_residues": [
+    "Matrix([\n[a + lambda, b, c],\n[         0, 0, 0],\n[         0, 0, 0]])",
+    "Matrix([\n[0,          0, 0],\n[a, b + lambda, c],\n[0,          0, 0]])",
+    "Matrix([\n[0, 0,          0],\n[0, 0,          0],\n[a, b, c + lambda]])",
+    "Matrix([\n[ b, -b, 0],\n[-a,  a, 0],\n[ 0,  0, 0]])",
+    "Matrix([\n[ c, 0, -c],\n[ 0, 0,  0],\n[-a, 0,  a]])",
+    "Matrix([\n[0,  0,  0],\n[0,  c, -c],\n[0, -b,  b]])"
+  ],
+  "middle_parameter": "-a-b-c",
+  "middle_projection": "Matrix([\n[1, 0, -1],\n[0, 1, -1]])",
+  "middle_residues": [
+    "Matrix([\n[-b - c, b],\n[     0, 0]])",
+    "Matrix([\n[0,      0],\n[a, -a - c]])",
+    "Matrix([\n[-a, -b],\n[-a, -b]])",
+    "Matrix([\n[ b, -b],\n[-a,  a]])",
+    "Matrix([\n[a + c, 0],\n[    a, 0]])",
+    "Matrix([\n[0,     b],\n[0, b + c]])"
+  ],
+  "burau_B3_sigma1": "Matrix([\n[1 - t, t],\n[    1, 0]])",
+  "burau_B3_sigma2": "Matrix([\n[1, -1],\n[0, -t]])",
+  "checks": {
+    "triangle_generic": {
+      "codimension_two_flats": 6,
+      "commutators_checked": 15
+    },
+    "triangle_middle": {
+      "codimension_two_flats": 6,
+      "commutators_checked": 15
+    },
+    "[y, -x + y, x + y, x]": {
+      "codimension_two_flats": 1,
+      "commutators_checked": 4
+    },
+    "[y, y - 1, -x + y]": {
+      "codimension_two_flats": 4,
+      "commutators_checked": 10
+    },
+    "[y, -x + y, y - z]": {
+      "codimension_two_flats": 7,
+      "commutators_checked": 18
+    }
+  },
+  "extra_checks": "Exceptional quotient ranks, A_n conjugacy n=2,3,4, braid relations and full twists B3,B4,B5: PASS"
+}
