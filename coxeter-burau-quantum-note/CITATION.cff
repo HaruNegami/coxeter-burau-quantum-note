@@ -1,6 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this note or its calculations, please cite this record and the relevant original sources listed in the note."
 type: software
+version: "2"
 title: "Generalized Burau representations and quantum gates: note and code"
 authors:
   - family-names: "Negami"
@@ -8,6 +9,7 @@ authors:
 date-released: 2026-11-10
 preferred-citation:
   type: generic
+  version: "2"
   title: "Generalized Burau representations and quantum gates: arrangements, compact closures, and prior results"
   authors:
     - family-names: "Negami"

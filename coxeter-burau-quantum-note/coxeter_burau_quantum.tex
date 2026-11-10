@@ -24,55 +24,76 @@
 \newcommand{\h}{\mathfrak h}
 \newcommand{\one}{\mathbf 1}
 \newcommand{\mc}{\operatorname{mc}}
+\newcommand{\MC}{\operatorname{MC}}
 \newcommand{\Conf}{\operatorname{Conf}}
 \newcommand{\Rep}{\operatorname{Rep}_{\mathrm{fd}}}
 \newcommand{\im}{\operatorname{im}}
 \newcommand{\Id}{\operatorname{Id}}
 \title{Generalized Burau representations and quantum gates:\\arrangements, compact closures, and prior results}
 \author{Haru Negami}
-\date{Note, 10 November 2026}
+\date{Note, version 2, 10 November 2026}
 \hypersetup{pdfauthor={Haru Negami},pdftitle={Generalized Burau representations and quantum gates}}
 \begin{document}
 \maketitle
 \begin{abstract}
-We collect explicit generalized Burau matrices, their invariant Hermitian
-forms, and a quantum-gate interpretation for finite Coxeter arrangements.
-We determine the conditions under which the invariant Hermitian forms
-are positive definite in terms of the Coxeter exponents.  A direct
+We study two constructions of Burau-type representations and their
+quantum-gate realizations. For finite Coxeter arrangements, we collect
+Squier's explicit matrices and determine when their invariant Hermitian
+forms are positive definite in terms of the Coxeter exponents. A direct
 rank-two proof gives a compact-closure formula for
 $0<|\theta|<\min\{\pi/h,\pi/10\}$, including roots of unity.
 For $E_6,E_7,E_8$, this formula holds throughout the parameter interval
 where the invariant Hermitian form is positive definite, except at the
-undeformed Coxeter specialization.  We explicitly show that these exceptional-type
-closure conclusions also follow from the existing two-eigenvalue
-classification of Freedman--Larsen--Wang; they are not claimed as new
-density or finite-image classification theorems.  In dimension eight,
-the resulting gates are non-Clifford, and are projectively universal
-away from the Coxeter specialization.  Appendices retain the Dynkin-type
-dictionary, algebraic convolution formulas for general affine arrangements,
-and a six-line based-monodromy example from the earlier note.
-The contribution of this document is an explicit synthesis with proofs,
-conventions, and reproducible calculations; theorem-by-theorem overlap
-with prior work is recorded.
+undeformed Coxeter specialization. These exceptional-type conclusions
+also follow from Freedman--Larsen--Wang and are not claimed as new
+classification theorems. The eight-dimensional gates give the stated
+non-Clifford and three-qubit universality conclusions.
+
+For arbitrary affine arrangements, we now carry out the separate
+construction from a unitary rank-one seed through directional middle
+convolution to quantum gates. Specializing Negami's prior invariant-form
+and signature theorems gives explicit definiteness conditions, including
+the middle quotient at resonance. We verify colored braid transport for
+unequal weights, give a sufficient condition for full unitary closure
+and non-Clifford gates, and an exact finite-image test for rational
+phases with finite-image base character. The output lives on the
+directional closure when collision hyperplanes must be added.
+The appendices retain the Dynkin dictionary, arbitrary-rank algebraic
+convolution formulas, and the based six-line example. This note provides
+explicit applications, proofs, conventions, and reproducible code; the
+two constructions are not identified in general.
 \end{abstract}
 
 \section{Introduction and statement}\label{sec:general-burau}
 In earlier work, we proposed a method for constructing quantum gates
 from monodromy representations obtained by applying middle convolution
 to KZ-type systems \cite{NegamiGates,NegamiKZ}.
-Motivated by this construction, the present note studies generalized
-Burau representations of Artin--Tits groups and their use in quantum
-gate construction.  Starting from Squier's representations \cite{Squier},
-we determine explicit conditions for positive definiteness of the invariant
-Hermitian forms in finite Coxeter type and describe the resulting unitary
-gates.  We also recall the middle-convolution construction for general
-affine hyperplane arrangements on their directional closures \cite{AH,Hiroe}
-and make its relation to Burau pullbacks explicit in an equal-weight
-specialization (Appendix~\ref{sec:equal}).
+The arrangement construction considered here follows that method:
+start with a unitary rank-one local system on a general affine hyperplane
+arrangement, apply directional middle convolution, and use the author's
+invariant Hermitian form and signature results
+\cite{NegamiKZ,NegamiSignature} to determine when the resulting matrices
+can be realized as unitary gates.
 
-Our emphasis is on explicit parameter ranges and on the
-distinction between finite-order generators and a finite generated group.
+Two families are treated with their respective domains and hypotheses.
+Sections~1--6 retain Squier's representations of Artin--Tits groups
+\cite{Squier}, their positive-definite parameter ranges in finite Coxeter
+type, and the corresponding closure and gate results.
+Section~\ref{sec:mc-gates}, added in version~2, carries out the
+arrangement-to-MC-to-gates construction itself, including the actual
+middle quotient and the base-group action. This construction uses
+Adachi--Hiroe's directional closure \cite{AH,Hiroe} and the
+Katz--Long--Moody framework \cite{HN}. The Burau connection is the
+equal-weight homological specialization; it does not identify the
+general MC output with every Coxeter-type representation.
 
+Our emphasis is on explicit parameter conditions, on the invariant form
+preserved by the complete monodromy, and on the distinction between
+finite-order generators and a finite generated group. The multiplicative
+MC construction in Section~\ref{sec:mc-gates} also distinguishes
+resonant middle quotients from unrestricted additive specializations.
+The arbitrary-rank additive formulas and the earlier fixed-meridian
+calculations remain in the appendices.
 
 \paragraph{General Coxeter type versus arbitrary arrangements.}
 For any finite-rank Coxeter matrix, not necessarily of finite type, the
@@ -89,6 +110,7 @@ satisfy $(R_i-I)(R_i+t^2I)=0$; they specialize for every $t\ne0$
 \cite[Definition 2.1]{BQ}, and agrees with \cite{SageArtin}.
 An arbitrary affine arrangement need not have a Coxeter matrix or a
 Dynkin type.  Appendix~\ref{sec:dynkin} explains the type notation;
+Section~\ref{sec:mc-gates} and
 Appendices~\ref{sec:general-arrangement}--\ref{sec:descent} treat a
 different, direction-dependent construction for arbitrary arrangements.
 No identification of the exceptional Coxeter representations with a
@@ -416,7 +438,8 @@ An arbitrary arrangement need not have a Dynkin type.  The results above
 concern reflection arrangements and do not supply a canonical universal
 gate construction for all arrangements.  We also do not identify these
 representations with a Katz--Long--Moody quotient; such a comparison is
-unnecessary for the closure proof.
+unnecessary for the Coxeter closure proof. The direct MC gate
+construction is instead developed in Section~\ref{sec:mc-gates}.
 
 The accompanying \texttt{verify\_coxeter\_gates.py} constructs the
 matrices and exports a concrete $E_8$ gate set at $\theta=\pi/60$.
@@ -505,6 +528,8 @@ Finite images in the positive $E$ interval & Infinite projective closure for $\t
 Non-Clifford generators & Pauli/symplectic formalism \cite{DDM} and the trace estimate in Lemma~\ref{lem:clifford}. & Elementary consequence. An identical published formulation has not been located; no priority claim is made.\\
 Three-qubit universality and finite $E_8$ limit & Closure implies universality; finite $W(E_8)$ gate realizations precede this note \cite{Planat,ARW}. & Application and explicit family; not a new universality criterion.\\
 General-arrangement convolution and middle quotient & Existing constructions \cite{AH,Hiroe,HN}. & Recalled formulas with hypotheses; not a new functor.\\
+Rank-one MC form and exact signature & Specializations of the author's results \cite{NegamiKZ,NegamiSignature}, with colored transport verified in Section~\ref{sec:mc-gates}. & Application to the complete arrangement monodromy, including its middle quotient.\\
+MC unitary closure and finite images & Projector Lie-algebra generation and the cyclotomic argument of \cite{NegamiFinite}. & Sufficient irrational-phase density criterion; rational finite-image criterion under the stated base-character hypothesis.\\
 Six-line monodromy and descent calculation & Burau pullback, fixed based loops, and a routine module quotient. & Explicit computation. Independent novelty of the particular presentation is unestablished.\\
 \bottomrule
 \end{longtable}
@@ -528,6 +553,424 @@ a new principal theorem.  The literature comparison is targeted to the
 claims made here, rather than a claim of exhaustive priority clearance.
 No new theorem is inferred merely from failure to locate an identical
 wording, parameterization, or example.
+
+\section{Quantum gates from rank-one middle convolution}
+\label{sec:mc-gates}
+This section carries out the construction
+\[
+ (\A,\chi)\longmapsto\MC^Y_\lambda(\chi)
+ \longmapsto H_{\MC}\longmapsto\{U_\gamma\}.
+\]
+Here $\lambda$ denotes the convolution parameter and is independent of
+the Coxeter parameter $\theta$ and the notation $\lambda=-e^{2i\theta}$
+used in Sections~1--6. The eigenangles below refer to multiplicative
+monodromy; they are not the additive residues in the appendices.
+In particular, the clockwise fiber convention here and the
+counterclockwise pure-braid convention of Appendix~\ref{sec:six-lines}
+must be matched before comparing matrix entries.
+
+\subsection{Construction and its domain}
+Let $\A$ be a finite affine hyperplane arrangement in $\C^d$ and choose
+a one-dimensional direction $Y$. Write coordinates as $(x,y)$ and the
+hyperplanes transverse to $Y$ as $y=f_i(x)$, $1\le i\le n$, where the
+$f_i$ are distinct affine functions. Hyperplanes parallel to $Y$ have
+equations depending only on $x$.
+Let $\B=\A^Y$ be obtained by adjoining the inverse images of all base
+hyperplanes $f_i=f_j$ for nonconstant differences. This is the directional
+closure used in the arrangement middle convolution of Adachi--Hiroe
+\cite{AH} and its Lie-algebraic realization \cite{Hiroe}.
+The projection
+\[
+ M(\B)\longrightarrow X
+\]
+to the complement of the parallel and collision hyperplanes in the base
+is a bundle of $n$-punctured affine lines. It has a continuous section:
+one can choose a positive real $y$ larger than $1+\sum_i|f_i(x)|$.
+Consequently its fundamental group contains the fiber group $F_n$ and
+has a splitting $F_n\rtimes\pi_1(X)$. Fix such a splitting and compatible
+based paths. The labelled root map $x\mapsto(f_1(x),\ldots,f_n(x))$
+induces a pure braid action on the fiber.
+
+Choose a unitary rank-one seed character $\chi$ on $\pi_1(M(\A))$,
+pull it back to $M(\B)$, and write
+\[
+ q_i=\chi(x_i)=e^{2\pi i a_i},\qquad 0\le a_i<1,
+ \qquad \lambda=e^{2\pi i\ell},\quad 0<\ell<1.
+\]
+The $x_i$ are the clockwise fiber generators in the algebraic convention
+of \cite{NegamiKZ}. The $a_i$ are eigenangles of these group matrices,
+not coefficients of logarithmic residues with an unspecified loop
+orientation. Reversing a loop inverts its matrix. Write $\eta$ for the
+unitary character on the chosen base subgroup. A different splitting
+changes the recorded base words and character together.
+
+The root action is pure, so it acts trivially on the abelianization of
+$F_n$. Thus arbitrary scalar $q_i$ extend to this semidirect product;
+they need not be equal. The KLM construction of \cite{HN} applies to this
+Artin action. Its fiberwise middle-convolution realization, and base
+change along the root map, identify the resulting local system with the
+directional topological middle convolution of the seed. This uses the
+bundle construction and compatibility of \cite{AH}; no unrestricted
+claim about an additive Riemann--Hilbert comparison at resonant residue
+parameters is needed.
+
+\begin{remark}[The group is recorded explicitly]
+The output is a representation of $\pi_1(M(\B))$. It factors through
+$\pi_1(M(\A))$ exactly when every added-hyperplane meridian acts trivially.
+If $\A=\A^Y$, no enlargement is required. For a reflection arrangement,
+the complement group is the pure Artin group; extension to the full
+Artin group requires additional equivariance. Naming the input Dynkin
+type does not supply either descent or that equivariance.
+\end{remark}
+
+\subsection{The actual MC matrices and their middle quotient}
+On $W=\C^n$, let $G_i$ be the identity except in row $i$, where
+\begin{equation}\label{mc:eq:G}
+ (G_i)_{ij}=\begin{cases}
+ \lambda(q_j-1),&j<i,\\
+ \lambda q_i,&j=i,\\
+ q_j-1,&j>i.
+ \end{cases}
+\end{equation}
+These are the scalar-input Dettweiler--Reiter/KLM convolution matrices
+in the convention of \cite[Definition 9]{NegamiKZ}.
+Define
+\[
+ K=\operatorname{span}\{e_i:q_i=1\},\qquad
+ L=\bigcap_i\ker(G_i-I),\qquad V_{\MC}=W/(K+L).
+\]
+The matrices used as gates below are induced on this quotient.
+Passing to $W/K$ deletes the indices with $q_i=1$; their fiber operators
+become identity. Let $p=\#\{i:q_i\ne1\}$. Put
+\[
+ \delta=\begin{cases}1,&\lambda\prod_iq_i=1,\\0,&\text{otherwise.}\end{cases}
+ \qquad \dim V_{\MC}=p-\delta.
+\]
+The case $p-\delta=0$ is a zero output, not a gate space.
+
+To include the base group, a positive adjacent root interchange has
+colored transport $T_i(q)$ equal to the identity away from indices
+$i,i+1$, with block
+\begin{equation}\label{mc:eq:T}
+ T_i(q)\big|_{i,i+1}=\begin{pmatrix}0&q_i\\1&1-q_{i+1}\end{pmatrix}.
+\end{equation}
+It maps the fiber with colors $q$ to that with colors $s_iq$.
+For a negative interchange use $T_i(s_iq)^{-1}$.
+Along a chronological word the next matrix multiplies on the left,
+and the colors are exchanged at each step. A pure word returns the
+colors to their starting values. Multiply its resulting transport by
+$\eta(\gamma)$ for a base loop $\gamma$. These formulas include the
+base monodromy; using only the $G_i$ would specify only the fiber subgroup.
+The actual base braid words must come from the given arrangement and
+chosen based paths. The code accepts those words; it does not infer
+all meridians of an arbitrary arrangement from unlabeled equations.
+
+\subsection{Negami's invariant form, specialized to rank one}
+Fix $s=\lambda^{1/2}=e^{\pi i\ell}$. Specializing the input form to $1$
+in \cite[Theorems 8--9]{NegamiKZ} gives
+\begin{equation}\label{mc:eq:H}
+ H_{ij}=\begin{cases}
+ s^{-1}(q_i^{-1}-\lambda)(q_i-1),&i=j,\\
+ s^{-1}(q_i^{-1}-1)(q_j-1),&i<j,\\
+ s(q_i^{-1}-1)(q_j-1),&i>j.
+ \end{cases}
+\end{equation}
+This form descends to the middle quotient used below.
+
+\begin{proposition}[Full monodromy invariance]\label{mc:prop:invariance}
+The matrix $H$ is Hermitian, $G_i^*HG_i=H$, and
+\begin{equation}\label{mc:eq:colored}
+ T_i(q)^*H(s_iq)T_i(q)=H(q).
+\end{equation}
+It follows that the entire arrangement monodromy preserves $H$, including
+the scalar base character. Its radical is $K+L$, and it induces a
+nondegenerate form $H_{\MC}$ on $V_{\MC}$.
+\end{proposition}
+\begin{proof}
+Hermitian symmetry follows from $\overline q_i=q_i^{-1}$ and
+$\overline s=s^{-1}$. The fiber identity is the scalar case of
+\cite[Theorem 8]{NegamiKZ}, or follows directly from
+\eqref{mc:eq:G}--\eqref{mc:eq:H}. For unequal weights one must also verify
+\eqref{mc:eq:colored}: outside the adjacent two rows and columns it is
+unchanged; in the adjacent block it follows by multiplication of the
+displayed $2\times2$ matrix, and the mixed rows give the exchanged
+factors $q_i-1,q_{i+1}-1$. This identity telescopes along a pure word.
+The unit-modulus scalar $\eta$ does not change the form.
+For compatibility with the fiber action, writing $G'_j=G_j(s_iq)$,
+the same calculation gives
+\[
+ T_iG_i=G'_{i+1}T_i,\quad
+ T_iG_{i+1}=(G'_{i+1})^{-1}G'_iG'_{i+1}T_i,\quad
+ T_iG_j=G'_jT_i\quad(j\ne i,i+1).
+\]
+These are the colored Artin-action identities; the colored braid
+relations are those of the Long--Moody construction.
+After deleting $K$, all $q_i\ne1$. If $B$ is the matrix whose $i$th
+row is the nonzero row of $G_i-I$, then
+\[
+ H=\operatorname{diag}\bigl(s^{-1}(q_i^{-1}-1)\bigr)B.
+\]
+Its diagonal prefactor is invertible, so $\ker H=\ker B=L$ on $W/K$.
+The radical statement on $W$ also follows from
+\cite[Theorem 9]{NegamiKZ}. This proves the quotient assertion.
+\end{proof}
+
+\subsection{Exact signature and the gate condition}
+Put
+\[
+ T=\ell+\sum_i a_i,\qquad m=\lfloor T\rfloor,
+ \qquad \delta=\mathbf1_{T\in\mathbb Z}.
+\]
+\begin{theorem}[Rank-one specialization of Negami's signature formula]
+For $\lambda\ne1$, the inertia of \eqref{mc:eq:H} and the signature of its
+middle quotient are respectively
+\begin{equation}\label{mc:eq:signature}
+ (n_+,n_-,n_0)(H)=(p-m,\ m-\delta,\ n-p+\delta),
+ \qquad \operatorname{sig}(H_{\MC})=(p-m,\ m-\delta).
+\end{equation}
+For a nonzero quotient, $H_{\MC}$ is positive definite exactly when
+$m=\delta$, and negative definite exactly when $m=p$.
+Equivalently, positive definiteness holds for $0<T\le1$, and negative
+definiteness for $p\le T<p+1$, always with $p-\delta>0$.
+\end{theorem}
+\begin{proof}
+In \cite[Theorem 1.1]{NegamiSignature}, the input dimension is $N=1$,
+the eigenangle of $\lambda\prod_iq_i$ is $\{T\}$, the total kernel
+dimension of the seed generators is $n-p$, and the product resonance
+dimension is $\delta$. The integer in that formula becomes
+$\ell+\sum_i a_i-\{T\}=\lfloor T\rfloor=m$, giving
+\eqref{mc:eq:signature}. The definiteness assertions follow by setting the
+appropriate negative or positive index to zero.
+\end{proof}
+
+For an elementary check, after deleting inactive indices, every initial
+$k\times k$ principal minor is
+\begin{equation}\label{mc:eq:minor}
+ \det H_{[k]}=4^k\sin^{k-1}(\pi\ell)
+ \sin\!\left(\pi\left(\ell+\sum_{j=1}^k a_j\right)\right)
+ \prod_{j=1}^k\sin(\pi a_j).
+\end{equation}
+Indeed, writing $D=\operatorname{diag}(q_i-1)$ gives $H=D^*MD$,
+where $M_{ii}=\sin\pi(a_i+\ell)/\sin\pi a_i$ and
+$M_{ij}=s^{-1}$ for $i<j$, $s$ for $i>j$. Subtracting successive
+rows after clearing the diagonal denominators, or induction by a Schur
+complement, gives \eqref{mc:eq:minor}. It is an additional check on the
+normalization; no nonsingular pivot is assumed at resonance.
+
+\begin{proposition}[Necessity for the complete output]
+For a nonzero rank-one MC output, its fiber representation is irreducible.
+Consequently the full arrangement representation is unitarizable if and
+only if $H_{\MC}$ is definite (with either sign).
+\end{proposition}
+\begin{proof}
+Work after deleting inactive indices. Let $\overline W$ be a nonzero
+invariant subspace of $\C^p/L$, and lift a nonzero class to $v\notin L$.
+Some $(G_i-I)v$ is a nonzero multiple of $e_i$. The class of $e_i$ is
+nonzero: for $p\ge2$ it is not fixed by $G_j$, $j\ne i$, since
+$q_i-1\ne0$; for $p=1$ the nonzero quotient is one dimensional.
+For every $j\ne i$, $(G_j-I)e_i$ is a nonzero multiple of $e_j$.
+Thus $\overline W$ contains all coordinate classes and is the full
+quotient. Any invariant positive form, compared with the nondegenerate
+$H_{\MC}$, gives a commuting endomorphism; Schur's lemma makes that
+endomorphism scalar. Hence a positive invariant form exists precisely
+when $H_{\MC}$ is definite.
+\end{proof}
+
+Choose an orthonormal matrix $Q$ whose columns span $(K+L)^\perp$.
+The induced matrices and form are
+\[
+ \widehat M_\gamma=Q^*M_\gamma Q,\qquad H_Q=Q^*HQ.
+\]
+The compression is the quotient action, not a claim that this orthogonal
+complement is invariant. Choose $\varepsilon=\pm1$ so that
+$\varepsilon H_Q>0$, and choose $S$ with $S^*S=\varepsilon H_Q$.
+Then the actual MC gates are
+\begin{equation}\label{mc:eq:gates}
+ U_\gamma=S\widehat M_\gamma S^{-1},\qquad U_\gamma^*U_\gamma=I.
+\end{equation}
+All generators use this one common basis. A $D$-dimensional output is
+a $D$-level gate system; it is directly a $k$-qubit system only when
+$D=2^k$, unless an explicit larger-space encoding is supplied.
+
+\subsection{Non-Clifford gates, closure, and finite image}
+For an active fiber index, the nontrivial eigenvalue is
+$\mu_i=\lambda q_i$. On a definite output of dimension at least two,
+\[
+ U_i=I+(\mu_i-1)v_iv_i^*,\qquad \|v_i\|=1.
+\]
+Here $v_i$ is the normalized vector $SQ^*e_i$.
+The inner products of these directions are, up to positive normalization,
+the entries of $\varepsilon H$. In particular all pairwise inner products
+are nonzero, and the directions span the output space.
+
+\begin{theorem}[A sufficient full-closure condition]\label{mc:thm:dense}
+Suppose the quotient form is definite, its dimension is $D\ge2$, and
+$\ell+a_i$ is irrational for every active index. Then the closure of
+the fiber image, and therefore of the full arrangement image after
+\eqref{mc:eq:gates}, is $\U(D)$. Every active fiber gate has infinite
+projective order and is non-Clifford in every finite Weyl--Heisenberg frame.
+\end{theorem}
+\begin{proof}
+The powers of $U_i$ are dense in the circle
+$\{\exp(itv_iv_i^*):t\in\mathbb R\}$. Thus the closure Lie algebra
+contains every $iv_iv_i^*$. Rank-one projectors onto two independent,
+nonorthogonal directions generate $\mathfrak u(2)$ on their span:
+their commutator and a second commutator give the two off-diagonal
+directions, and their traces give the central direction. Inductively,
+if $\mathfrak u(W)$ is available and a new normal has both a nonzero
+component in $W$ and outside $W$, the same commutators add
+$\mathfrak u(W+\C v)$. Pairwise nonzero inner products and spanning
+therefore give $\mathfrak u(D)$. The closed subgroup is $\U(D)$.
+The eigenvalue ratio $\mu_i$ is not a root of unity. The projective
+normalizer of any finite irreducible Weyl--Heisenberg group is finite:
+it acts by automorphisms on that finite group, and its kernel is scalar by
+irreducibility. Hence an infinite-projective-order gate cannot be Clifford.
+This uses the same spectral principle as \cite{NegamiGates}.
+\end{proof}
+
+For example, choose all active $a_i$ rational and positive with
+$\sum_i a_i<1$, and choose irrational $0<\ell<1-\sum_i a_i$.
+Then the quotient has dimension $p$, is positive definite, and the
+theorem applies. It works for every input arrangement and direction
+with $p\ge2$, on its stated directional closure; this assertion does
+not require surjectivity onto a universal configuration-space group.
+
+\begin{theorem}[Exact finite-image test for rational seed phases]
+Assume all $a_i,\ell$ are rational, $\lambda\ne1$, the base character
+$\eta$ has finite image, and $D=p-\delta>0$. Choose a common denominator
+$N$. For every $k$ coprime to $N$, define
+\[
+ T_k=\{k\ell\}+\sum_i\{ka_i\},\qquad m_k=\lfloor T_k\rfloor.
+\]
+The full arrangement MC image is finite if and only if
+\begin{equation}\label{mc:eq:finite}
+ m_k\in\{\delta,p\}\quad\text{for every }k\in(\mathbb Z/N\mathbb Z)^\times.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Under a cyclotomic embedding the scalar eigenangles become their
+fractional multiples, while inactive indices and the resonance dimension
+are unchanged. Formula \eqref{mc:eq:signature} gives the conjugate quotient
+signature $(p-m_k,m_k-\delta)$.
+If the arrangement image is finite, its fiber image is finite. Its
+conjugate fiber representations are irreducible by the preceding
+proposition. Averaging over each finite image and applying Schur's lemma
+forces the canonical conjugate form to be definite. This proves necessity.
+Conversely, the ambient matrices \eqref{mc:eq:G}, the colored transports,
+and their inverses have cyclotomic integral entries, since the scalar
+parameters are roots of unity. After extending the field to include
+the finite values of $\eta$, their quotient preserves the image of a
+full integral lattice. The quotient is defined over that field, including
+at resonance. If \eqref{mc:eq:finite} holds, every complex embedding preserves
+a positive form after a possible sign change. The diagonal embedding
+of the lattice in the product of the archimedean spaces is discrete,
+whereas the matrix images lie in a compact product of unitary groups.
+Only finitely many images of a lattice basis are possible. This proves
+finiteness. This is the scalar specialization of the arithmetic approach
+in \cite{NegamiFinite}, with the argument included to specify its scope.
+\end{proof}
+
+The exact test does not infer finite image from finite orders of the
+individual generators. For example, $n=3$, all $a_i=\ell=1/10$, has
+positive form at the original embedding, but $k=3$ gives
+$T_k=6/5$, hence signature $(2,1)$: the image is infinite.
+The cases $n=2$, all $a_i=\ell=1/6$, and $n=3$, all
+$a_i=\ell=1/4$ (a resonant rank-two quotient), pass the finite test.
+Theorem~\ref{mc:thm:dense} is a sufficient closure theorem. We do not
+classify all closures for rational parameters or for mixtures of
+rational and irrational eigenangles. At rational parameters, Clifford
+membership also requires a specified computational frame; the code's
+Weyl-normalizer distances are numerical diagnostics, not exact certificates.
+
+\subsection{An arrangement example and Dynkin inputs}
+Start with the genuinely affine three-line arrangement
+\[
+ \A=\{y=0,\ y=x,\ y=1-x\},\qquad
+ \B=\A\cup\{x=0,x=1,x=\tfrac12\}.
+\]
+Use the unitary rank-one seed with fiber eigenangles
+\[
+ (a_1,a_2,a_3)=(1/20,1/15,1/12),\quad
+ \ell=\sqrt2/20,
+\]
+and trivial character on the base subgroup. The fiber weight sum is
+$1/5$, so $T=1/5+\sqrt2/20<1$. There is no middle rank drop, and
+the actual three-dimensional MC output is positive definite and has
+closure $\U(3)$. Each of its three fiber gates is non-Clifford by
+Theorem~\ref{mc:thm:dense}. These are qutrit gates.
+For this example the fiber matrices used by the program are explicitly
+\[
+ G_1=\begin{pmatrix}\lambda q_1&q_2-1&q_3-1\\0&1&0\\0&0&1\end{pmatrix},\quad
+ G_2=\begin{pmatrix}1&0&0\\\lambda(q_1-1)&\lambda q_2&q_3-1\\0&0&1\end{pmatrix},
+\]
+\[
+ G_3=\begin{pmatrix}1&0&0\\0&1&0\\\lambda(q_1-1)&\lambda(q_2-1)&\lambda q_3\end{pmatrix}.
+\]
+The root map of the base is $x\mapsto(0,x,1-x)$. Base meridians
+are evaluated by their based pure braid words in \eqref{mc:eq:T}; their
+precise stems affect the conjugating words, but not the common
+invariant form or the full-closure conclusion, which already follows
+from the actual fiber subgroup.
+
+Dynkin types can specify the input arrangement without replacing this
+MC construction. For a generic seed with all $q_i\ne1$ and no product
+resonance, its output rank is the number $n$ of transverse hyperplanes,
+not the rank of the root system:
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+Input & Direction & $n$ & Enlargement\\
+\midrule
+$A_r$ & forget the last labelled coordinate & $r$ & none\\
+$B_r=C_r$ & last coordinate & $2r-1$ & none\\
+$D_r$ & last coordinate & $2r-2$ & add $x_i=0$, $i<r$\\
+$E_6$ & generic direction & $36$ & collision closure\\
+$E_7$ & generic direction & $63$ & collision closure\\
+$E_8$ & generic direction & $120$ & collision closure\\
+\bottomrule
+\end{tabular}
+\end{center}
+For $B_r$, the punctures are $0,\pm x_1,\ldots,\pm x_{r-1}$,
+and all their collisions are already base hyperplanes of type $B_{r-1}$.
+For $D_r$ the punctures are $\pm x_1,\ldots,\pm x_{r-1}$;
+the collisions $x_i=-x_i$ add the missing coordinate hyperplanes.
+A generic direction for $E_r$ is transverse to every root hyperplane,
+giving the displayed counts. Special directions can change $n$.
+In particular, this construction does not turn an $E_8$ rank-one seed
+into eight-dimensional gates merely because the root system has rank eight.
+
+The Burau terminology refers to the rank-one homological construction:
+on the universal configuration bundle the corresponding colored
+representation is the reduced Gassner-type twisted homology representation.
+When the $n$ seed colors and the convolution color are all equal,
+its nonresonant specialization recovers reduced Burau on the pure braid
+group, with the appropriate loop and basis conventions \cite{HN}.
+Pulling back to an arrangement gives the Burau-type family discussed here.
+At resonance the middle quotient must be taken; the full homological
+Burau specialization and that quotient need not have equal dimensions.
+No equality with Squier's general Coxeter-type construction is assumed
+or needed for the gates in this note.
+
+\subsection{Reproducibility of the MC gate calculations}
+Run \texttt{python3 mc\_arrangement\_gates.py --verify --verify-symbolic}.
+The script builds the MC matrices, the form, its radical quotient and
+one common unitarization, and exports a qutrit gate example. The symbolic
+checks use rational Laurent expressions in independent colors and the
+square root of $\lambda$; numerical tests check 164 tuples, including
+zero seed angles, resonance, and negative-definite cases. Rational
+finite-image tests use exact fractions and modular enumeration.
+These checks supplement the stated proofs; they do not replace their
+review. The group closure arguments are mathematical arguments, not
+inferences from numerical word searches. Large group enumeration is
+not required.
+
+This working note and its code were drafted with substantial assistance
+from OpenAI ChatGPT. It explicitly applies the author's prior invariant
+form and signature results. The recorded verification concerns only the
+checks listed above and does not certify independent human review or
+the novelty of the results. Sections~1--6 use the Coxeter--Burau construction; the present
+section uses the MC matrices \eqref{mc:eq:G} on their middle quotient.
+
 
 \appendix
 \section{Writing reflection arrangements by Dynkin type}\label{sec:dynkin}
@@ -709,7 +1152,8 @@ Its equations remain valid input data without a Dynkin label.
 Let $\A$ be a finite arrangement of affine hyperplanes in $\C^\ell$, and put
 $M(\A)=\C^\ell\setminus\bigcup_{H\in\A}H$.
 In these appendices $\kappa$ denotes the additive convolution parameter,
-not the gate eigenvalue $\lambda$ used in the main text.
+not the Coxeter gate eigenvalue in Sections~1--6 or the
+multiplicative convolution parameter in Section~\ref{sec:mc-gates}.
 Fix a one-dimensional direction $Y$.  The minimal directional closure
 $\B=\A^Y$ adds the collision hyperplanes necessary to make the projection
 along $Y$ a bundle of punctured affine lines.  This closure and the
@@ -1161,5 +1605,15 @@ J.~Pure Appl.~Algebra \textbf{126} (1998), 87--120.
 T.~Kohno, \emph{Hyperplane arrangements, local system homology and
 iterated integrals}, Adv.~Stud.~Pure Math.~\textbf{62} (2012), 157--174.
 \url{https://www.ms.u-tokyo.ac.jp/~kohno/papers/kohno_aspm.pdf}.
+\bibitem{NegamiSignature}
+H.~Negami, \emph{A closed signature formula for the Katz--Long--Moody
+Hermitian form}, arXiv:2609.11793 (2026), Theorem 1.1.
+\url{https://arxiv.org/abs/2609.11793}.
+
+\bibitem{NegamiFinite}
+H.~Negami, \emph{Finite images of braid group representations and
+algebraic solutions of KZ-type equations}, arXiv:2609.25805 (2026).
+\url{https://arxiv.org/abs/2609.25805}.
+
 \end{thebibliography}
 \end{document}
